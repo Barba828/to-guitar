@@ -15,18 +15,18 @@ export default {
     input: './src/index.ts',
     output: [
         // {
-        //     file: './dist/index.cjs.js',
+        //     file: './lib/index.cjs.js',
         //     format: 'cjs',
         //     footer,
         // },
         {
-            file: './dist/index.esm.js',
+            file: './lib/index.esm.js',
             format: 'esm',
             footer,
             sourcemap: true,
         },
         // {
-        //     file: './dist/index.umd.js',
+        //     file: './lib/index.umd.js',
         //     format: 'umd',
         //     name: 'Dry',
         //     footer,

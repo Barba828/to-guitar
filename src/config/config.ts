@@ -1,4 +1,6 @@
-export * from './config-chord.js'
+/**
+ * 乐理知识配置
+ */
 
 /**
  * 音高Interval数组
