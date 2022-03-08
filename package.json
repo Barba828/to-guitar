@@ -1,13 +1,15 @@
 {
 	"name": "to-guitar",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "guitar chord js lib",
 	"main": "lib/index.esm.js",
+	"types": "lib/index.d.ts",
 	"scripts": {
 		"test": "jest",
 		"patch": "yarn version --patch",
 		"build": "rollup -c",
-		"build:types": "tsc"
+		"build:types": "tsc",
+		"publish:patch": "yarn build && yarn patch && npm publish"
 	},
 	"repository": {
 		"type": "git",
@@ -21,6 +23,10 @@
 	],
 	"author": "Barba828",
 	"license": "ISC",
+	"files": [
+		"lib",
+		"src/types"
+	],
 	"bugs": {
 		"url": "https://github.com/Barba828/to-guitar/issues"
 	},
