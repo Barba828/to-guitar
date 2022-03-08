@@ -303,5 +303,3 @@ export {
 	transNote,
 	transTone,
 }
-
-console.log(getChordType(['C', 'D#', 'G']), transChordDegree(['C', 'D#', 'G'], 2))

@@ -6,7 +6,7 @@
  */
 declare const transBoard: (zeroTones?: ToneType[], GradeLength?: number) => Point[][];
 /**
- * 和弦 + 指板 => 和弦指法
+ * 和弦音名数组 + 指板 => 和弦指法
  * @param chords 和弦音数组
  * @param points 指板数组
  * @param fingerSpan 手指品位跨度
@@ -52,4 +52,40 @@ declare const transScaleDegree: (scale: ToneType) => {
  */
 declare const transChordDegree: (chords: ToneType[], calGrades: number) => Note[];
 
-export { transBoard, transChordDegree, transChordTaps, transNote, transScaleDegree, transTone };
+/**
+ * 乐理知识配置
+ */
+/**
+ * 音高Interval数组
+ */
+declare const NOTE_LIST: Note[];
+declare const NOTE_FALLING_LIST: NoteFalling[];
+declare const INTERVAL_LIST: Interval[];
+declare const INTERVAL_FALLING_LIST: IntervalFalling[];
+declare const DEFAULT_TUNE: Note[];
+/**
+ * 品柱数量
+ */
+declare const GRADE_NUMS = 16;
+/**
+ * 弦数量
+ */
+declare const STRING_NUMS = 6;
+/**
+ * 手指品柱跨度
+ */
+declare const FINGER_GRADE_NUMS = 4;
+
+/**
+ * 和弦乐理配置
+ */
+/**
+ * 和弦分类
+ */
+declare const chordMap: Map<number, ChordType>;
+/**
+ * 级数分类
+ */
+declare const degreeArr: DegreeType[];
+
+export { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, NOTE_FALLING_LIST, NOTE_LIST, STRING_NUMS, chordMap, degreeArr, transBoard, transChordDegree, transChordTaps, transNote, transScaleDegree, transTone };
