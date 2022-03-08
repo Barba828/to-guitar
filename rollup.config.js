@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+import dts from "rollup-plugin-dts";
 import pkg from './package.json';
 
 // 为了将引入的 npm 包，也打包进最终结果中
@@ -11,30 +12,36 @@ if(typeof window !== 'undefined') {
   window._Dry_VERSION_ = '${pkg.version}'
 }`
 
-export default {
-    input: './src/index.ts',
-    output: [
-        // {
-        //     file: './lib/index.cjs.js',
-        //     format: 'cjs',
-        //     footer,
-        // },
-        {
-            file: './lib/index.esm.js',
-            format: 'esm',
-            footer,
-            sourcemap: true,
-        },
-        // {
-        //     file: './lib/index.umd.js',
-        //     format: 'umd',
-        //     name: 'Dry',
-        //     footer,
-        // },
-    ],
-    plugins: [
-        typescript(),
-        commonjs(),
-        resolve()
-    ]
-}
+export default [
+    {
+        input: './src/index.ts',
+        output: [
+            // {
+            //     file: './lib/index.cjs.js',
+            //     format: 'cjs',
+            //     footer,
+            // },
+            {
+                file: './lib/index.esm.js',
+                format: 'esm',
+                footer,
+                sourcemap: true,
+            },
+            // {
+            //     file: './lib/index.umd.js',
+            //     format: 'umd',
+            //     name: 'Dry',
+            //     footer,
+            // },
+        ],
+        plugins: [
+            typescript(),
+            commonjs(),
+            resolve()
+        ]
+    },
+    {
+        input: './src/index.ts',
+        output: [{ file: "lib/index.d.ts", format: "esm" }],
+        plugins: [dts()],
+    }]

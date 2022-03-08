@@ -1,4 +1,4 @@
-import { transBoard } from '../src/tuning'
+import { transBoard } from '../src/utils'
 
 describe('Trans', () => {
 	test('Trans Methods', () => {

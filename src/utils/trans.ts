@@ -8,7 +8,7 @@ import {
 	INTERVAL_FALLING_LIST,
 	chordMap,
 	degreeArr,
-} from './config'
+} from '../config'
 
 /**
  * 便于计算，默认调音一线零品为低音，即
@@ -102,7 +102,7 @@ const getChordType = (chords: Note[]) => {
 }
 
 /**
- * 和弦 + 指板 => 和弦指法
+ * 和弦音名数组 + 指板 => 和弦指法
  * @param chords 和弦音数组
  * @param points 指板数组
  * @param fingerSpan 手指品位跨度
