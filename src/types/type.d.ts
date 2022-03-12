@@ -2,23 +2,12 @@ declare type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A
 declare type NoteFalling = 'C' | 'bD' | 'D' | 'bE' | 'E' | 'F' | 'bG' | 'G' | 'bA' | 'A' | 'bB' | 'B'
 declare type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7'
 declare type IntervalFalling = '1' | 'b2' | '2' | 'b3' | '3' | '4' | 'b5' | '5' | 'b6' | '6' | 'b7' | '7'
+type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
 /**
  * 音符类型
  */
-declare type ToneType = Note | NoteFalling | Interval | IntervalFalling
-declare type Pitch = number
-
-declare type Point = {
-	/**
-	 * 相对音高
-	 * Tone: relative 0～11
-	 */
-	tone: Pitch
-	/**
-	 * 绝对音高
-	 * Pitch: absolute 0～∞
-	 */
-	pitch: Pitch
+declare type ToneType = Note | NoteFalling | Interval | IntervalFalling | IntervalNum
+declare type ToneSchema = {
 	/**
 	 * 音名 升调
 	 * Note #
@@ -39,6 +28,24 @@ declare type Point = {
 	 * Interval b
 	 */
 	intervalFalling: IntervalFalling
+}
+declare type Pitch = number
+
+declare type Point = {
+	/**
+	 * 相对音高
+	 * Tone: relative 0～11
+	 */
+	tone: Pitch
+	/**
+	 * 绝对音高
+	 * Pitch: absolute 0～∞
+	 */
+	pitch: Pitch
+	/**
+	 * 音高
+	 */
+	toneSchema: ToneSchema
 	/**
 	 * 弦位
 	 * string position
@@ -54,7 +61,6 @@ declare type Point = {
 	 */
 	index: number
 }
-
 /**
  * Point标题类型
  */
@@ -72,12 +78,23 @@ declare type ChordType = {
 	 */
 	name: string
 	/**
+	 * 中文和弦名称
+	 */
+	name_zh: string
+	/**
+	 * 和弦组成音
+	 */
+	constitute?: (Interval | IntervalFalling)[]
+	/**
 	 * 和弦音名
 	 * C|D|...
 	 */
 	note?: Note
 }
-
+/**
+ * 和弦级数
+ */
+declare type ChordDegreeNum = 3 | 7 | 9
 declare type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ'
 declare type RollType = 'Do' | 'Re' | 'Mi' | 'Fa' | 'So' | 'La' | 'Ti'
 declare type DegreeType = {
