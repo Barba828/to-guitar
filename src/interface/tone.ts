@@ -1,13 +1,13 @@
-export declare type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B'
-export declare type NoteFalling = 'C' | 'bD' | 'D' | 'bE' | 'E' | 'F' | 'bG' | 'G' | 'bA' | 'A' | 'bB' | 'B'
-export declare type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7'
-export declare type IntervalFalling = '1' | 'b2' | '2' | 'b3' | '3' | '4' | 'b5' | '5' | 'b6' | '6' | 'b7' | '7'
+export type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B'
+export type NoteFalling = 'C' | 'bD' | 'D' | 'bE' | 'E' | 'F' | 'bG' | 'G' | 'bA' | 'A' | 'bB' | 'B'
+export type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7'
+export type IntervalFalling = '1' | 'b2' | '2' | 'b3' | '3' | '4' | 'b5' | '5' | 'b6' | '6' | 'b7' | '7'
 type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
 /**
  * 音符类型
  */
-export declare type ToneType = Note | NoteFalling | Interval | IntervalFalling | IntervalNum
-export declare type ToneSchema = {
+export type ToneType = Note | NoteFalling | Interval | IntervalFalling | IntervalNum
+export type ToneSchema = {
 	/**
 	 * 音名 升调
 	 * Note #
@@ -29,12 +29,12 @@ export declare type ToneSchema = {
 	 */
 	intervalFalling: IntervalFalling
 }
-export declare type Pitch = number
+export type Pitch = number
 
 /**
  * 指板音符位置
  */
-export declare type Point = {
+export type Point = {
 	/**
 	 * 相对音高
 	 * Tone: relative 0～11
@@ -67,4 +67,4 @@ export declare type Point = {
 /**
  * Point标题类型
  */
-export declare type PointType = 'note' | 'noteFalling' | 'interval' | 'intervalFalling'
+export type PointType = 'note' | 'noteFalling' | 'interval' | 'intervalFalling'

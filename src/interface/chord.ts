@@ -1,6 +1,6 @@
 import type { Interval, IntervalFalling, Note } from './tone'
 
-export declare type ChordType = {
+export type ChordType = {
 	/**
 	 * 和弦标记
 	 * dim|aug|...
@@ -28,10 +28,10 @@ export declare type ChordType = {
 /**
  * 和弦级数
  */
-export declare type ChordDegreeNum = 3 | 7 | 9
-export declare type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ'
-export declare type RollType = 'Do' | 'Re' | 'Mi' | 'Fa' | 'So' | 'La' | 'Ti'
-export declare type DegreeType = {
+export type ChordDegreeNum = 3 | 7 | 9
+export type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ'
+export type RollType = 'Do' | 'Re' | 'Mi' | 'Fa' | 'So' | 'La' | 'Ti'
+export type DegreeType = {
 	/**
 	 * 音程
 	 * 距离I级和弦音程
