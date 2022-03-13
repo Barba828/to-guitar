@@ -2,6 +2,8 @@
  * 和弦乐理配置
  */
 
+import type { ChordDegreeNum, ChordType, DegreeType } from '@interface'
+
 /**
  * 和弦分类
  * @ToDo 他妈的转位和弦这种模式好难实现啊

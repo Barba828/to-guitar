@@ -1,4 +1,5 @@
-import { NOTE_LIST, chordMap, degreeArr, chordDegreeMap } from 'src/config'
+import { NOTE_LIST, chordMap, degreeArr, chordDegreeMap } from '@config'
+import type { Note, ToneType, ChordType, ChordDegreeNum } from '@interface'
 import { transNote, transTone } from './trans-tone'
 
 /**
@@ -63,7 +64,7 @@ const transChord = (tone: ToneType, chordTypeTag: string = '') => {
  */
 const transScaleDegree = (scale: ToneType = 'C', chordType: ChordDegreeNum = 3) => {
 	const note = transNote(scale)
-	const initIndex = NOTE_LIST.findIndex((item) => item === note)
+	const initIndex = NOTE_LIST.indexOf(note)
 	const intervalLength = NOTE_LIST.length
 	const degreeLength = degreeArr.length
 	const chordScale = chordDegreeMap.get(chordType) // 顺阶和弦级数增量

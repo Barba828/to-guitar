@@ -2,6 +2,8 @@
  * 乐理知识配置
  */
 
+import type { Note, NoteFalling, Interval, IntervalFalling } from '@interface'
+
 /**
  * 音高Interval数组
  */

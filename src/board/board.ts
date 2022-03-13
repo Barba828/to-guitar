@@ -1,5 +1,6 @@
-import { transBoard, transChordTaps } from 'src'
-import { DEFAULT_TUNE } from 'src/config'
+import { transBoard, transChordTaps } from '@/index'
+import type { ChordType, Note, Point, ToneType } from '@interface'
+import { DEFAULT_TUNE } from '@config'
 
 class Board {
 	private _board: Point[][] = []
