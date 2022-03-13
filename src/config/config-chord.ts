@@ -2,7 +2,7 @@
  * 和弦乐理配置
  */
 
-import type { ChordDegreeNum, ChordType, DegreeType } from '@interface'
+import type { ChordDegreeNum, ChordType, DegreeType } from '../interface'
 
 /**
  * 和弦分类

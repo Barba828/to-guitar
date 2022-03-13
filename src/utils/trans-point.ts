@@ -1,5 +1,5 @@
 import { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@config'
-import type { ToneType, Point } from '@interface'
+import type { ToneType, Point } from '../interface'
 import { transChordDegree } from './trans'
 import { transTone, transNote } from './trans-tone'
 

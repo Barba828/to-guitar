@@ -1,5 +1,5 @@
 import { NOTE_LIST, NOTE_FALLING_LIST, INTERVAL_LIST, INTERVAL_FALLING_LIST } from '@config'
-import type { ToneType, Note, Interval, ToneSchema, NoteFalling, IntervalFalling } from '@interface'
+import type { ToneType, Note, Interval, ToneSchema, NoteFalling, IntervalFalling } from '../interface'
 
 // overload
 function transNote(x: ToneType): Note

@@ -1,5 +1,5 @@
 import { transBoard, transChordTaps } from '@/index'
-import type { ChordType, Note, Point, ToneType } from '@interface'
+import type { ChordType, Note, Point, ToneType } from '../interface'
 import { DEFAULT_TUNE } from '@config'
 
 class Board {

@@ -1,5 +1,124 @@
-import * as _interface from '@interface';
-import { ToneType, Note, ChordType, ChordDegreeNum, ToneSchema, Point, NoteFalling, Interval, IntervalFalling, DegreeType } from '@interface';
+declare type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B';
+declare type NoteFalling = 'C' | 'bD' | 'D' | 'bE' | 'E' | 'F' | 'bG' | 'G' | 'bA' | 'A' | 'bB' | 'B';
+declare type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7';
+declare type IntervalFalling = '1' | 'b2' | '2' | 'b3' | '3' | '4' | 'b5' | '5' | 'b6' | '6' | 'b7' | '7';
+declare type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+/**
+ * 音符类型
+ */
+declare type ToneType = Note | NoteFalling | Interval | IntervalFalling | IntervalNum;
+declare type ToneSchema = {
+    /**
+     * 音名 升调
+     * Note #
+     */
+    note: Note;
+    /**
+     * 音名 降调
+     * interval b
+     */
+    noteFalling: NoteFalling;
+    /**
+     * 音程 升调
+     * Interval #
+     */
+    interval: Interval;
+    /**
+     * 音程 降调
+     * Interval b
+     */
+    intervalFalling: IntervalFalling;
+};
+declare type Pitch = number;
+/**
+ * 指板音符位置
+ */
+declare type Point = {
+    /**
+     * 相对音高
+     * Tone: relative 0～11
+     */
+    tone: Pitch;
+    /**
+     * 绝对音高
+     * Pitch: absolute 0～∞
+     */
+    pitch: Pitch;
+    /**
+     * 音高
+     */
+    toneSchema: ToneSchema;
+    /**
+     * 弦位
+     * string position
+     */
+    string: number;
+    /**
+     * 品位
+     * grade position
+     */
+    grade: number;
+    /**
+     * 唯一下标
+     */
+    index: number;
+};
+/**
+ * Point标题类型
+ */
+declare type PointType = 'note' | 'noteFalling' | 'interval' | 'intervalFalling';
+
+declare type ChordType = {
+    /**
+     * 和弦标记
+     * dim|aug|...
+     */
+    tag: string;
+    /**
+     * 和弦名称
+     * major triad|...
+     */
+    name: string;
+    /**
+     * 中文和弦名称
+     */
+    name_zh: string;
+    /**
+     * 和弦组成音
+     */
+    constitute?: (Interval | IntervalFalling)[];
+    /**
+     * 和弦音名
+     * C|D|...
+     */
+    note?: Note;
+};
+/**
+ * 和弦级数
+ */
+declare type ChordDegreeNum = 3 | 7 | 9;
+declare type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ';
+declare type RollType = 'Do' | 'Re' | 'Mi' | 'Fa' | 'So' | 'La' | 'Ti';
+declare type DegreeType = {
+    /**
+     * 音程
+     * 距离I级和弦音程
+     */
+    interval: number;
+    /**
+     * 级数
+     * 罗马数字标记
+     */
+    tag: DegreeTag;
+    /**
+     * 级数类型
+     */
+    scale: string;
+    /**
+     * 唱名
+     */
+    roll: RollType;
+};
 
 /**
  * 和弦根音 => 和弦
@@ -18,8 +137,8 @@ declare const transChord: (tone: ToneType, chordTypeTag?: string) => {
  * @returns 大调音阶顺阶和弦 数组
  */
 declare const transScaleDegree: (scale?: ToneType, chordType?: ChordDegreeNum) => {
-    degreeType: _interface.DegreeType;
-    toneType: _interface.ToneSchema;
+    degreeType: DegreeType;
+    toneType: ToneSchema;
     chord: Note[];
     chordType: ChordType;
 }[];
@@ -49,7 +168,7 @@ declare const transBoard: (zeroTones?: ToneType[], GradeLength?: number) => Poin
  * @param fingerSpan 手指品位跨度
  */
 declare const transChordTaps: (tones: ToneType[], board?: Point[][], fingerSpan?: number) => {
-    chordType: _interface.ChordType;
+    chordType: ChordType;
     chordList: Point[][];
 };
 
@@ -97,4 +216,4 @@ declare const degreeArr: DegreeType[];
  */
 declare const chordDegreeMap: Map<ChordDegreeNum, number[]>;
 
-export { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, NOTE_FALLING_LIST, NOTE_LIST, STRING_NUMS, chordDegreeMap, chordMap, degreeArr, transBoard, transChord, transChordDegree, transChordTaps, transNote, transScaleDegree, transTone };
+export { ChordDegreeNum, ChordType, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, NOTE_FALLING_LIST, NOTE_LIST, Note, NoteFalling, Pitch, Point, PointType, RollType, STRING_NUMS, ToneSchema, ToneType, chordDegreeMap, chordMap, degreeArr, transBoard, transChord, transChordDegree, transChordTaps, transNote, transScaleDegree, transTone };
