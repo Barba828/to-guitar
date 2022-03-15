@@ -15,7 +15,7 @@ declare type ToneSchema = {
     note: Note;
     /**
      * 音名 降调
-     * interval b
+     * Note b
      */
     noteFalling: NoteFalling;
     /**
@@ -28,6 +28,11 @@ declare type ToneSchema = {
      * Interval b
      */
     intervalFalling: IntervalFalling;
+    /**
+     * 八度高度
+     * C4
+     */
+    level?: number;
 };
 declare type Pitch = number;
 /**
@@ -160,7 +165,7 @@ declare function transTone(note: number): ToneSchema;
  * @param GradeLength 指板品数
  * @returns Point[][]
  */
-declare const transBoard: (zeroTones?: ToneType[], GradeLength?: number) => Point[][];
+declare const transBoard: (zeroTones?: ToneType[], GradeLength?: number, baseLevel?: number) => Point[][];
 /**
  * 和弦音名数组 + 指板 => 和弦指法
  * @param chords 和弦音数组

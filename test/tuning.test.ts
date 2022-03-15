@@ -1,9 +1,9 @@
-import { transBoard, transChordDegree, transChord, transScaleDegree } from '../src/utils'
+import { transBoard, transChordDegree, transChord, transScaleDegree } from '@/utils'
 
 describe('Trans', () => {
 	test('Trans Methods', () => {
 		const board = transBoard()
-		// console.log(board)
+		console.log(board.map((item) => item.map((it) => it.toneSchema)))
 		expect(typeof board).toBe('object')
 
 		// const chords = transChordDegree([6, 2, 3], 2)

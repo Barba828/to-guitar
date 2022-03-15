@@ -1,4 +1,4 @@
-import { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@config'
+import { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@/config'
 import type { ToneType, Point } from '../interface'
 import { transChordDegree } from './trans'
 import { transTone, transNote } from './trans-tone'
@@ -43,23 +43,24 @@ const getAdditionPitchs = (zeroTones: ToneType[] = DEFAULT_TUNE) => {
  * @param GradeLength 指板品数
  * @returns Point[][]
  */
-const transBoard = (zeroTones: ToneType[] = DEFAULT_TUNE, GradeLength: number = GRADE_NUMS) => {
-	const tuneNums = getAdditionPitchs(zeroTones)
+const transBoard = (zeroTones: ToneType[] = DEFAULT_TUNE, GradeLength: number = GRADE_NUMS, baseLevel: number = 2) => {
+	const zeroPitchs = getAdditionPitchs(zeroTones)
 
-	const boardNums = tuneNums.map((tune, stringIndex) => {
+	const boardNums = zeroPitchs.map((zeroPitch, stringIndex) => {
 		const stringNums = []
 		for (let grade = 0; grade < GradeLength; grade++) {
-			const pitch = tune + grade
-			const string = stringIndex + 1
+			const pitch = zeroPitch + grade
 			const tone = pitch % NOTE_LIST.length
 			const toneSchema = transTone(tone)
 			const index = stringIndex * GradeLength + grade
+			const level = Math.floor(pitch / NOTE_LIST.length) + baseLevel
+			toneSchema.level = level
 
 			const point = {
 				tone,
 				pitch,
 				toneSchema,
-				string,
+				string: stringIndex + 1,
 				grade,
 				index,
 			} as Point

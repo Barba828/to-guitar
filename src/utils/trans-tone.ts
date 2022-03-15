@@ -1,4 +1,4 @@
-import { NOTE_LIST, NOTE_FALLING_LIST, INTERVAL_LIST, INTERVAL_FALLING_LIST } from '@config'
+import { NOTE_LIST, NOTE_FALLING_LIST, INTERVAL_LIST, INTERVAL_FALLING_LIST } from '@/config'
 import type { ToneType, Note, Interval, ToneSchema, NoteFalling, IntervalFalling } from '../interface'
 
 // overload
@@ -37,7 +37,7 @@ function transTone(note: Note | number): ToneSchema {
 	if (typeof note === 'number') {
 		index = note
 	} else {
-		index = NOTE_LIST.findIndex((item) => item === note)
+		index = NOTE_LIST.indexOf(note)
 	}
 	return {
 		note: NOTE_LIST[index],

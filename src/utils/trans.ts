@@ -1,4 +1,4 @@
-import { NOTE_LIST, chordMap, degreeArr, chordDegreeMap } from '@config'
+import { NOTE_LIST, chordMap, degreeArr, chordDegreeMap } from '@/config'
 import type { Note, ToneType, ChordType, ChordDegreeNum } from '../interface'
 import { transNote, transTone } from './trans-tone'
 

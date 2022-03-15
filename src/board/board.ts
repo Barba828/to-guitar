@@ -1,6 +1,6 @@
 import { transBoard, transChordTaps } from '@/index'
 import type { ChordType, Note, Point, ToneType } from '../interface'
-import { DEFAULT_TUNE } from '@config'
+import { DEFAULT_TUNE } from '@/config'
 
 class Board {
 	private _board: Point[][] = []
@@ -11,14 +11,23 @@ class Board {
 		this._board = transBoard(zeroTones)
 	}
 
+	/**
+	 * 指板数据
+	 */
 	get board() {
 		return this._board
 	}
 
+	/**
+	 * 和弦列表
+	 */
 	get chords() {
 		return this._chords
 	}
 
+	/**
+	 * 和弦类型
+	 */
 	get chordType() {
 		return this._chordType
 	}

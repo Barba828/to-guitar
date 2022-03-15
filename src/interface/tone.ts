@@ -15,7 +15,7 @@ export type ToneSchema = {
 	note: Note
 	/**
 	 * 音名 降调
-	 * interval b
+	 * Note b
 	 */
 	noteFalling: NoteFalling
 	/**
@@ -28,6 +28,11 @@ export type ToneSchema = {
 	 * Interval b
 	 */
 	intervalFalling: IntervalFalling
+	/**
+	 * 八度高度
+	 * C4
+	 */
+	level?: number
 }
 export type Pitch = number
 
