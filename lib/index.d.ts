@@ -1,12 +1,16 @@
 declare type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B';
-declare type NoteFalling = 'C' | 'bD' | 'D' | 'bE' | 'E' | 'F' | 'bG' | 'G' | 'bA' | 'A' | 'bB' | 'B';
+declare type NoteFalling = 'C' | 'Db' | 'D' | 'Eb' | 'E' | 'F' | 'Gb' | 'G' | 'Ab' | 'A' | 'Bb' | 'B';
 declare type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7';
-declare type IntervalFalling = '1' | 'b2' | '2' | 'b3' | '3' | '4' | 'b5' | '5' | 'b6' | '6' | 'b7' | '7';
+declare type IntervalFalling = '1' | '2b' | '2' | '3b' | '3' | '4' | '5b' | '5' | '6b' | '6' | '7b' | '7';
 declare type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 /**
  * 音符类型
  */
-declare type ToneType = Note | NoteFalling | Interval | IntervalFalling | IntervalNum;
+declare type Tone = Note | NoteFalling | Interval | IntervalFalling | IntervalNum;
+/**
+ * ToneType名称
+ */
+declare type ToneTypeName = 'note' | 'noteFalling' | 'interval' | 'intervalFalling';
 declare type ToneSchema = {
     /**
      * 音名 升调
@@ -28,6 +32,10 @@ declare type ToneSchema = {
      * Interval b
      */
     intervalFalling: IntervalFalling;
+    /**
+     * 下标
+     */
+    index?: number;
     /**
      * 八度高度
      * C4
@@ -68,10 +76,6 @@ declare type Point = {
      */
     index: number;
 };
-/**
- * Point标题类型
- */
-declare type PointType = 'note' | 'noteFalling' | 'interval' | 'intervalFalling';
 
 declare type ChordType = {
     /**
@@ -93,17 +97,23 @@ declare type ChordType = {
      */
     constitute?: (Interval | IntervalFalling)[];
     /**
-     * 和弦音名
+     * 和弦根音名
      * C|D|...
      */
-    note?: Note;
+    tone?: ToneSchema;
+    /**
+     * 转位和弦 即实际和弦名称over/note
+     * C/E ("C over E")
+     */
+    over?: ToneSchema;
 };
 /**
  * 和弦级数
  */
 declare type ChordDegreeNum = 3 | 7 | 9;
+declare type ModeType = 'major' | 'minor';
 declare type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ';
-declare type RollType = 'Do' | 'Re' | 'Mi' | 'Fa' | 'So' | 'La' | 'Ti';
+declare type RollType = 'Do' | 'Di' | 'Ra' | 'Re' | 'Mi' | 'Fa' | 'Fi' | 'Se' | 'So' | 'Si' | 'Le' | 'La' | 'Li' | 'Te' | 'Ti';
 declare type DegreeType = {
     /**
      * 音程
@@ -131,31 +141,43 @@ declare type DegreeType = {
  * @param chordTypeTag 和弦类型标记（'m'|'aug'|'dim'|...）
  * @returns
  */
-declare const transChord: (tone: ToneType, chordTypeTag?: string) => {
+declare const transChord: (tone: Tone, chordTypeTag?: string) => {
     chord: Note[];
     chordType: ChordType;
 } | null;
 /**
- * 大调 => 顺阶和弦
- * @param scale 大调
- * @param chordType 和弦类型 3｜7｜9
+ * 调式 & 调 => 顺阶和弦
+ * @param {
+ *  @attr mode 调式 默认「major自然大调」
+ *  @attr scale 大调音阶 默认「C调」
+ *  @attr chordType 和弦类型 默认「3和弦」
+ * }
  * @returns 大调音阶顺阶和弦 数组
  */
-declare const transScaleDegree: (scale?: ToneType, chordType?: ChordDegreeNum) => {
+declare const transScaleDegree: ({ mode, scale, chordType, }: {
+    mode?: ModeType | undefined;
+    scale?: Tone | undefined;
+    chordType?: ChordDegreeNum | undefined;
+}) => {
     degreeType: DegreeType;
     toneType: ToneSchema;
     chord: Note[];
-    chordType: ChordType;
+    chordType: ChordType[];
 }[];
 /**
- * 和弦 => 变调和弦
+ * 和弦 => 变调和弦类型
  * @param chords 和弦音数组
- * @param calGrades 升降度数
+ * @param calGrades 升降度数 默认不变调
  */
-declare const transChordDegree: (chords: ToneType[], calGrades?: number | undefined) => ChordType;
+declare const transChordType: (chords: Tone[], calGrades?: number | undefined) => ChordType[];
+/**
+ * 五度圈 数组
+ * @param root 根音 默认「C」
+ */
+declare const transFifthsCircle: (root?: Tone) => ToneSchema[];
 
-declare function transNote(x: ToneType): Note;
-declare function transNote(x: ToneType[]): Note[];
+declare function transNote(x: Tone): Note;
+declare function transNote(x: Tone[]): Note[];
 declare function transTone(note: Note): ToneSchema;
 declare function transTone(note: number): ToneSchema;
 
@@ -165,15 +187,15 @@ declare function transTone(note: number): ToneSchema;
  * @param GradeLength 指板品数
  * @returns Point[][]
  */
-declare const transBoard: (zeroTones?: ToneType[], GradeLength?: number, baseLevel?: number) => Point[][];
+declare const transBoard: (zeroTones?: Tone[], GradeLength?: number, baseLevel?: number) => Point[][];
 /**
  * 和弦音名数组 + 指板 => 和弦指法
  * @param chords 和弦音数组
  * @param board 指板数组
  * @param fingerSpan 手指品位跨度
  */
-declare const transChordTaps: (tones: ToneType[], board?: Point[][], fingerSpan?: number) => {
-    chordType: ChordType;
+declare const transChordTaps: (tones: Tone[], board?: Point[][], fingerSpan?: number) => {
+    chordType: ChordType[];
     chordList: Point[][];
 };
 
@@ -189,6 +211,8 @@ declare const NOTE_FALLING_LIST: NoteFalling[];
 declare const INTERVAL_LIST: Interval[];
 declare const INTERVAL_FALLING_LIST: IntervalFalling[];
 declare const DEFAULT_TUNE: Note[];
+declare const NOTE_SORT: Note[];
+declare const SEMITONES_LENGTH: number;
 /**
  * 品柱数量
  */
@@ -205,20 +229,18 @@ declare const FINGER_GRADE_NUMS = 4;
 /**
  * 和弦乐理配置
  */
-
 /**
  * 和弦分类
- * @ToDo 他妈的转位和弦这种模式好难实现啊
  */
 declare const chordMap: Map<number, ChordType>;
 /**
- * 级数分类
+ * 和弦级数分类
  */
-declare const degreeArr: DegreeType[];
+declare const degreeMap: Map<ModeType, DegreeType[]>;
 /**
  * 顺接和弦级数
  * 三和弦/七和弦/九和弦
  */
 declare const chordDegreeMap: Map<ChordDegreeNum, number[]>;
 
-export { ChordDegreeNum, ChordType, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, NOTE_FALLING_LIST, NOTE_LIST, Note, NoteFalling, Pitch, Point, PointType, RollType, STRING_NUMS, ToneSchema, ToneType, chordDegreeMap, chordMap, degreeArr, transBoard, transChord, transChordDegree, transChordTaps, transNote, transScaleDegree, transTone };
+export { ChordDegreeNum, ChordType, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, SEMITONES_LENGTH, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScaleDegree, transTone };

@@ -1,12 +1,16 @@
 export type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A' | 'A#' | 'B'
-export type NoteFalling = 'C' | 'bD' | 'D' | 'bE' | 'E' | 'F' | 'bG' | 'G' | 'bA' | 'A' | 'bB' | 'B'
+export type NoteFalling = 'C' | 'Db' | 'D' | 'Eb' | 'E' | 'F' | 'Gb' | 'G' | 'Ab' | 'A' | 'Bb' | 'B'
 export type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7'
-export type IntervalFalling = '1' | 'b2' | '2' | 'b3' | '3' | '4' | 'b5' | '5' | 'b6' | '6' | 'b7' | '7'
+export type IntervalFalling = '1' | '2b' | '2' | '3b' | '3' | '4' | '5b' | '5' | '6b' | '6' | '7b' | '7'
 type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
 /**
  * 音符类型
  */
-export type ToneType = Note | NoteFalling | Interval | IntervalFalling | IntervalNum
+export type Tone = Note | NoteFalling | Interval | IntervalFalling | IntervalNum
+/**
+ * ToneType名称
+ */
+export type ToneTypeName = 'note' | 'noteFalling' | 'interval' | 'intervalFalling'
 export type ToneSchema = {
 	/**
 	 * 音名 升调
@@ -28,6 +32,10 @@ export type ToneSchema = {
 	 * Interval b
 	 */
 	intervalFalling: IntervalFalling
+	/**
+	 * 下标
+	 */
+	index?: number
 	/**
 	 * 八度高度
 	 * C4
@@ -69,7 +77,3 @@ export type Point = {
 	 */
 	index: number
 }
-/**
- * Point标题类型
- */
-export type PointType = 'note' | 'noteFalling' | 'interval' | 'intervalFalling'

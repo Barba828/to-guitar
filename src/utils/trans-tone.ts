@@ -1,17 +1,17 @@
 import { NOTE_LIST, NOTE_FALLING_LIST, INTERVAL_LIST, INTERVAL_FALLING_LIST } from '@/config'
-import type { ToneType, Note, Interval, ToneSchema, NoteFalling, IntervalFalling } from '../interface'
+import type { Tone, Note, Interval, ToneSchema, NoteFalling, IntervalFalling, ToneTypeName } from '../interface'
 
 // overload
-function transNote(x: ToneType): Note
-function transNote(x: ToneType[]): Note[]
+function transNote(x: Tone): Note
+function transNote(x: Tone[]): Note[]
 /**
  * Tone音字符 => 标准Note字符
  * @param x
  * @returns Note
  */
-function transNote(x: ToneType | ToneType[]) {
+function transNote(x: Tone | Tone[]) {
 	if (x instanceof Array) {
-		return x.map((x) => transNote(x as ToneType))
+		return x.map((x) => transNote(x as Tone))
 	}
 	return isNote(x)
 		? x
@@ -44,6 +44,7 @@ function transTone(note: Note | number): ToneSchema {
 		noteFalling: NOTE_FALLING_LIST[index],
 		interval: INTERVAL_LIST[index],
 		intervalFalling: INTERVAL_FALLING_LIST[index],
+		index,
 	}
 }
 

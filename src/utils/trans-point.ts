@@ -1,6 +1,6 @@
 import { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@/config'
-import type { ToneType, Point } from '../interface'
-import { transChordDegree } from './trans'
+import type { Tone, Point } from '../interface'
+import { transChordType } from './trans'
 import { transTone, transNote } from './trans-tone'
 
 /**
@@ -18,7 +18,7 @@ import { transTone, transNote } from './trans-tone'
  * @param zeroTones 0品调音
  * @returns pitchs 绝对音高数组
  */
-const getAdditionPitchs = (zeroTones: ToneType[] = DEFAULT_TUNE) => {
+const getAdditionPitchs = (zeroTones: Tone[] = DEFAULT_TUNE) => {
 	const zeroNotes = transNote(zeroTones)
 	const pitchs = [NOTE_LIST.indexOf(zeroNotes[0])]
 	let upKey = 0
@@ -43,7 +43,7 @@ const getAdditionPitchs = (zeroTones: ToneType[] = DEFAULT_TUNE) => {
  * @param GradeLength 指板品数
  * @returns Point[][]
  */
-const transBoard = (zeroTones: ToneType[] = DEFAULT_TUNE, GradeLength: number = GRADE_NUMS, baseLevel: number = 2) => {
+const transBoard = (zeroTones: Tone[] = DEFAULT_TUNE, GradeLength: number = GRADE_NUMS, baseLevel: number = 2) => {
 	const zeroPitchs = getAdditionPitchs(zeroTones)
 
 	const boardNums = zeroPitchs.map((zeroPitch, stringIndex) => {
@@ -79,7 +79,7 @@ const transBoard = (zeroTones: ToneType[] = DEFAULT_TUNE, GradeLength: number = 
  * @param board 指板数组
  * @param fingerSpan 手指品位跨度
  */
-const transChordTaps = (tones: ToneType[], board: Point[][] = transBoard(), fingerSpan: number = FINGER_GRADE_NUMS) => {
+const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSpan: number = FINGER_GRADE_NUMS) => {
 	const chords = transNote(tones)
 	const root = chords[0] //当前根音
 	const roots: Point[] = [] // 指板上的所有根音 数组
@@ -165,7 +165,7 @@ const transChordTaps = (tones: ToneType[], board: Point[][] = transBoard(), fing
 		return maxGradeA - maxGradeB
 	}
 
-	const chordType = transChordDegree(chords)
+	const chordType = transChordType(chords)
 	const chordList = tapsList.filter(integrityFilter).filter(fingersFilter).sort(gradeSorter)
 
 	return { chordType, chordList }

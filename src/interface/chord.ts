@@ -1,4 +1,4 @@
-import type { Interval, IntervalFalling, Note } from './tone'
+import type { Interval, IntervalFalling, ToneSchema } from './tone'
 
 export type ChordType = {
 	/**
@@ -20,17 +20,23 @@ export type ChordType = {
 	 */
 	constitute?: (Interval | IntervalFalling)[]
 	/**
-	 * 和弦音名
+	 * 和弦根音名
 	 * C|D|...
 	 */
-	note?: Note
+	tone?: ToneSchema
+	/**
+	 * 转位和弦 即实际和弦名称over/note
+	 * C/E ("C over E")
+	 */
+	over?: ToneSchema
 }
 /**
  * 和弦级数
  */
 export type ChordDegreeNum = 3 | 7 | 9
+export type ModeType = 'major' | 'minor'
 export type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ'
-export type RollType = 'Do' | 'Re' | 'Mi' | 'Fa' | 'So' | 'La' | 'Ti'
+export type RollType = 'Do' | 'Di' | 'Ra' | 'Re' | 'Mi' | 'Fa' | 'Fi' | 'Se' | 'So' | 'Si' | 'Le' | 'La' | 'Li' | 'Te' | 'Ti' //现代唱名系统对于升降调的区分
 export type DegreeType = {
 	/**
 	 * 音程

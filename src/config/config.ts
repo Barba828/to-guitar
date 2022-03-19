@@ -8,10 +8,13 @@ import type { Note, NoteFalling, Interval, IntervalFalling } from '../interface'
  * 音高Interval数组
  */
 export const NOTE_LIST: Note[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-export const NOTE_FALLING_LIST: NoteFalling[] = ['C', 'bD', 'D', 'bE', 'E', 'F', 'bG', 'G', 'bA', 'A', 'bB', 'B']
+export const NOTE_FALLING_LIST: NoteFalling[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 export const INTERVAL_LIST: Interval[] = ['1', '1#', '2', '2#', '3', '4', '4#', '5', '5#', '6', '6#', '7']
-export const INTERVAL_FALLING_LIST: IntervalFalling[] = ['1', 'b2', '2', 'b3', '3', '4', 'b5', '5', 'b6', '6', 'b7', '7']
+export const INTERVAL_FALLING_LIST: IntervalFalling[] = ['1', '2b', '2', '3b', '3', '4', '5b', '5', '6b', '6', '7b', '7']
 export const DEFAULT_TUNE: Note[] = ['E', 'A', 'D', 'G', 'B', 'E']
+export const NOTE_SORT: Note[] = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C']
+
+export const SEMITONES_LENGTH = NOTE_LIST.length
 
 /**
  * 品柱数量

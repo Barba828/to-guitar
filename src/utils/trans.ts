@@ -1,26 +1,39 @@
-import { NOTE_LIST, chordMap, degreeArr, chordDegreeMap } from '@/config'
-import type { Note, ToneType, ChordType, ChordDegreeNum } from '../interface'
+import { NOTE_LIST, chordMap, degreeMap, chordDegreeMap } from '@/config'
+import type { Note, Tone, ChordType, ChordDegreeNum, ModeType } from '../interface'
 import { transNote, transTone } from './trans-tone'
 
 /**
- * 和弦 => 和弦名称
+ * 和弦音 => 和弦名称[]
  * @param chords
  */
-const getChordType = (chords: Note[]) => {
-	const notes = chords.map((chord) => NOTE_LIST.indexOf(chord))
+const getChordType = (chords: Note[]): ChordType[] => {
+	const tone = transTone(chords[0])
+	const chordList: ChordType[] = []
 
-	let key = 0
-	for (let index = 1; index < notes.length; index++) {
-		const prev = notes[index - 1]
-		const curr = notes[index] > prev ? notes[index] : notes[index] + 12
-		const temp = curr - prev
-		key = key * 10 + temp
-	}
+	// 遍历和弦音中每个音当根音当情况（cover转位和弦）
+	chords.forEach((chord, index) => {
+		// 根音偏移
+		const offset = NOTE_LIST.indexOf(chord)
+		const rest = [...chords]
+		rest.splice(index, 1)
+		// 放置根音并对后面的音进行排序（设置offset便于排序，即排序结果根音恒在数组首位）
+		const intervals = [chord, ...rest].map((item) =>
+			NOTE_LIST.indexOf(item) - offset >= 0 ? NOTE_LIST.indexOf(item) - offset : NOTE_LIST.indexOf(item) - offset + NOTE_LIST.length
+		)
 
-	return {
-		note: chords[0],
-		...chordMap.get(key),
-	} as ChordType
+		// 排序完成根据音程计算key
+		const key = intervals.reduce((pre, cur, curIndex) => pre * 10 + (cur - intervals[curIndex - 1] || 0), 0)
+
+		const chordItem = chordMap.get(key)
+		if (chordItem) {
+			chordList.push({
+				tone,
+				over: transTone(NOTE_LIST[offset]),
+				...chordItem,
+			})
+		}
+	})
+	return chordList
 }
 
 /**
@@ -29,7 +42,7 @@ const getChordType = (chords: Note[]) => {
  * @param chordTypeTag 和弦类型标记（'m'|'aug'|'dim'|...）
  * @returns
  */
-const transChord = (tone: ToneType, chordTypeTag: string = '') => {
+const transChord = (tone: Tone, chordTypeTag: string = '') => {
 	const note = transNote(tone)
 	const chordTypeItem = Array.from(chordMap.entries()).find(([_key, value]) => value.tag === chordTypeTag)
 	if (!chordTypeItem) {
@@ -57,26 +70,43 @@ const transChord = (tone: ToneType, chordTypeTag: string = '') => {
 }
 
 /**
- * 大调 => 顺阶和弦
- * @param scale 大调
- * @param chordType 和弦类型 3｜7｜9
+ * 调式 & 调 => 顺阶和弦
+ * @param {
+ *  @attr mode 调式 默认「major自然大调」
+ *  @attr scale 大调音阶 默认「C调」
+ *  @attr chordType 和弦类型 默认「3和弦」
+ * }
  * @returns 大调音阶顺阶和弦 数组
  */
-const transScaleDegree = (scale: ToneType = 'C', chordType: ChordDegreeNum = 3) => {
+const transScaleDegree = ({
+	mode = 'major',
+	scale = 'C',
+	chordType = 3,
+}: {
+	mode?: ModeType
+	scale?: Tone
+	chordType?: ChordDegreeNum
+}) => {
 	const note = transNote(scale)
+	const degreeArr = degreeMap.get(mode)
+
+	if (!degreeArr || !note) {
+		return []
+	}
+
 	const initIndex = NOTE_LIST.indexOf(note)
-	const intervalLength = NOTE_LIST.length
+	const noteLength = NOTE_LIST.length
 	const degreeLength = degreeArr.length
 	const chordScale = chordDegreeMap.get(chordType) // 顺阶和弦级数增量
 
 	// 根据大调顺阶degreeArr转换大调
-	const degrees = degreeArr.map((degree) => {
-		const curIndex = (initIndex + degree.interval) % intervalLength
+	const degrees = degreeArr.map((degree, index) => {
+		const curIndex = (initIndex + degree.interval) % noteLength
 		const toneType = transTone(curIndex)
 		return {
 			degreeType: degree,
 			toneType,
-			chord: [] as Note[], // 顺阶和弦
+			chord: [] as Note[],
 			chordType: {} as ReturnType<typeof getChordType>,
 		}
 	})
@@ -90,12 +120,13 @@ const transScaleDegree = (scale: ToneType = 'C', chordType: ChordDegreeNum = 3) 
 }
 
 /**
- * 和弦 => 变调和弦
+ * 和弦 => 变调和弦类型
  * @param chords 和弦音数组
- * @param calGrades 升降度数
+ * @param calGrades 升降度数 默认不变调
  */
-const transChordDegree = (chords: ToneType[], calGrades?: number) => {
+const transChordType = (chords: Tone[], calGrades?: number) => {
 	let chordNotes = transNote(chords)
+
 	if (calGrades) {
 		chordNotes = chordNotes
 			.map((note) => NOTE_LIST.indexOf(note))
@@ -106,4 +137,19 @@ const transChordDegree = (chords: ToneType[], calGrades?: number) => {
 	return getChordType(chordNotes)
 }
 
-export { transChord, transChordDegree, transScaleDegree }
+/**
+ * 五度圈 数组
+ * @param root 根音 默认「C」
+ */
+const transFifthsCircle = (root: Tone = 'C') => {
+	const note = transNote(root)
+	const basicIndex = NOTE_LIST.indexOf(note)
+	const step = 7 // 纯五度 Perfect 5th 半音数
+
+	return new Array(NOTE_LIST.length).fill(1).map((_, index) => {
+		const curIndex = (step * index + basicIndex) % NOTE_LIST.length
+		return transTone(curIndex)
+	})
+}
+
+export { transChord, transChordType, transScaleDegree, transFifthsCircle }

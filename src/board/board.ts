@@ -1,13 +1,13 @@
 import { transBoard, transChordTaps } from '@/index'
-import type { ChordType, Note, Point, ToneType } from '../interface'
+import type { ChordType, Note, Point, Tone } from '../interface'
 import { DEFAULT_TUNE } from '@/config'
 
 class Board {
 	private _board: Point[][] = []
 	private _chords: Point[][] = []
-	private _chordType?: ChordType
+	private _chordType?: ChordType[]
 	// chord: Note[] = []
-	constructor(zeroTones: ToneType[] = DEFAULT_TUNE) {
+	constructor(zeroTones: Tone[] = DEFAULT_TUNE) {
 		this._board = transBoard(zeroTones)
 	}
 
