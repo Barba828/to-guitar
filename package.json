@@ -1,6 +1,6 @@
 {
 	"name": "to-guitar",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "guitar chord js lib",
 	"main": "lib/index.esm.js",
 	"types": "lib/index.d.ts",
