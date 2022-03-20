@@ -110,10 +110,10 @@ declare type ChordType = {
 /**
  * 和弦级数
  */
-declare type ChordDegreeNum = 3 | 7 | 9;
-declare type ModeType = 'major' | 'minor';
 declare type DegreeTag = 'Ⅰ' | 'Ⅱ' | 'Ⅲ' | 'Ⅳ' | 'Ⅴ' | 'Ⅵ' | 'Ⅶ';
 declare type RollType = 'Do' | 'Di' | 'Ra' | 'Re' | 'Mi' | 'Fa' | 'Fi' | 'Se' | 'So' | 'Si' | 'Le' | 'La' | 'Li' | 'Te' | 'Ti';
+declare type ChordDegreeNum = 3 | 7 | 9;
+declare type ModeType = 'major' | 'minor';
 declare type DegreeType = {
     /**
      * 音程
@@ -134,6 +134,12 @@ declare type DegreeType = {
      */
     roll: RollType;
 };
+declare type Chord = {
+    degree: DegreeType;
+    tone: ToneSchema;
+    chord: Note[];
+    chordType: ChordType[];
+};
 
 /**
  * 和弦根音 => 和弦
@@ -150,22 +156,17 @@ declare const transChord: (tone: Tone, chordTypeTag?: string) => {
  * @param {
  *  @attr mode 调式 默认「major自然大调」
  *  @attr scale 大调音阶 默认「C调」
- *  @attr chordType 和弦类型 默认「3和弦」
+ *  @attr chordNumType 和弦类型 默认「3和弦」
  * }
  * @returns 大调音阶顺阶和弦 数组
  */
-declare const transScaleDegree: ({ mode, scale, chordType, }: {
+declare const transScaleDegree: ({ mode, scale, chordNumType, }: {
     mode?: ModeType | undefined;
     scale?: Tone | undefined;
-    chordType?: ChordDegreeNum | undefined;
-}) => {
-    degreeType: DegreeType;
-    toneType: ToneSchema;
-    chord: Note[];
-    chordType: ChordType[];
-}[];
+    chordNumType?: ChordDegreeNum | undefined;
+}) => Chord[];
 /**
- * 和弦 => 变调和弦类型
+ * 和弦 => 和弦名称 & 类型
  * @param chords 和弦音数组
  * @param calGrades 升降度数 默认不变调
  */
@@ -185,6 +186,7 @@ declare function transTone(note: number): ToneSchema;
  * 0品调音 => 指板二维数组
  * @param zeroGrades 指板0品调音
  * @param GradeLength 指板品数
+ * @param baseLevel 基准音高
  * @returns Point[][]
  */
 declare const transBoard: (zeroTones?: Tone[], GradeLength?: number, baseLevel?: number) => Point[][];
@@ -199,6 +201,60 @@ declare const transChordTaps: (tones: Tone[], board?: Point[][], fingerSpan?: nu
     chordList: Point[][];
 };
 
+declare type BoardOption = {
+    /**
+     * 调式「自然大调」
+     */
+    mode: ModeType;
+    /**
+     * 音阶「 C 」
+     */
+    scale: Tone;
+    /**
+     * 和弦类型「三和弦」
+     */
+    chordNumType: ChordDegreeNum;
+    /**
+     * 调内顺阶和弦「 C Dm Em ... 」
+     */
+    chords: Chord[];
+    /**
+     * 指板
+     * 「弦数」 * 「品数」
+     */
+    keyboard: Point[][];
+    /**
+     * 调音「 EADGBE 」
+     * 数组长度也表示了指板「弦数」
+     */
+    baseTone: Tone[];
+    /**
+     * 指板「品数」
+     */
+    baseFret: number;
+    /**
+     * 最低音 level 「 2 」
+     * 根音「 E 」默认为 E2 音
+     */
+    baseLevel: number;
+};
+declare type BoardOptionProps = Pick<BoardOption, 'mode' | 'scale' | 'chordNumType' | 'baseTone' | 'baseFret' | 'baseLevel'>;
+declare const defaultOptions: BoardOptionProps;
+declare class Board {
+    private emit;
+    private readonly _board;
+    /**
+     * 指板图
+     * @param emit 指板数据修改回调函数
+     * @param options 配置
+     */
+    constructor(emit: (board: BoardOption) => void, options?: Partial<BoardOptionProps>);
+    get board(): BoardOption;
+    setOptions: (options: Partial<BoardOptionProps>) => void;
+    private getKeyBoard;
+    private getChords;
+}
+
 /**
  * 乐理知识配置
  */
@@ -211,8 +267,13 @@ declare const NOTE_FALLING_LIST: NoteFalling[];
 declare const INTERVAL_LIST: Interval[];
 declare const INTERVAL_FALLING_LIST: IntervalFalling[];
 declare const DEFAULT_TUNE: Note[];
+declare const DEFAULT_LEVEL = 2;
 declare const NOTE_SORT: Note[];
-declare const SEMITONES_LENGTH: number;
+/**
+ * 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'
+ * https://learningmusic.ableton.com/zh-Hans/advanced-topics/modes.html
+ */
+declare const MODE_LIST: ModeType[];
 /**
  * 品柱数量
  */
@@ -241,6 +302,9 @@ declare const degreeMap: Map<ModeType, DegreeType[]>;
  * 顺接和弦级数
  * 三和弦/七和弦/九和弦
  */
-declare const chordDegreeMap: Map<ChordDegreeNum, number[]>;
+declare const chordDegreeMap: Map<ChordDegreeNum, {
+    name: string;
+    interval: number[];
+}>;
 
-export { ChordDegreeNum, ChordType, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, SEMITONES_LENGTH, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScaleDegree, transTone };
+export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScaleDegree, transTone };

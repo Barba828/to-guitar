@@ -1,4 +1,4 @@
-import { DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@/config'
+import { DEFAULT_LEVEL, DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@/config'
 import type { Tone, Point } from '../interface'
 import { transChordType } from './trans'
 import { transTone, transNote } from './trans-tone'
@@ -9,7 +9,7 @@ import { transTone, transNote } from './trans-tone'
  * 数字 12~23 => 标音 C~B
  * 数字 24~35 => 高音 C~B
  *
- * 标准调弦吉他：['E', 'A', 'D', 'G', 'B', 'E']
+ * 标准调弦吉他：['E2', 'A2', 'D3', 'G3', 'B3', 'E4']
  * 即绝对音高为：[4, 9, 14, 19, 23, 28]
  */
 
@@ -41,9 +41,10 @@ const getAdditionPitchs = (zeroTones: Tone[] = DEFAULT_TUNE) => {
  * 0品调音 => 指板二维数组
  * @param zeroGrades 指板0品调音
  * @param GradeLength 指板品数
+ * @param baseLevel 基准音高
  * @returns Point[][]
  */
-const transBoard = (zeroTones: Tone[] = DEFAULT_TUNE, GradeLength: number = GRADE_NUMS, baseLevel: number = 2) => {
+const transBoard = (zeroTones: Tone[] = DEFAULT_TUNE, GradeLength: number = GRADE_NUMS, baseLevel: number = DEFAULT_LEVEL) => {
 	const zeroPitchs = getAdditionPitchs(zeroTones)
 
 	const boardNums = zeroPitchs.map((zeroPitch, stringIndex) => {

@@ -1,2 +1,2 @@
-export * from './chord.js'
-export * from './tone.js'
+export * from './chord'
+export * from './tone'

@@ -37,13 +37,17 @@ const chordMap = new Map<number, ChordType>([
 
 	/**
 	 * 九和弦
+	 * 计算复音程真TMD麻烦
 	 */
+	// 1234 1243
 	[2234, { tag: 'maj9', name: 'major ninth chord', constitute: ['1', '3', '5', '7', '2'], name_zh: '大九和弦' }],
 	[2233, { tag: '9', name: 'ninth chord', constitute: ['1', '3', '5', '7b', '2'], name_zh: '属九和弦' }],
 	[2143, { tag: 'm9', name: 'minor ninth chord', constitute: ['1', '3b', '5', '7b', '2'], name_zh: '小九和弦' }],
 	[2133, { tag: 'dim9-5', name: 'half-diminished ninth chord', constitute: ['1', '3b', '5b', '7b', '2'], name_zh: '半减九和弦' }],
 	[2133, { tag: 'dim9', name: 'diminished ninth chord', constitute: ['1', '3b', '5b', '6', '2'], name_zh: '减九和弦' }],
-	[2242, { tag: 'aug9', name: 'augmented ninth chord', constitute: ['1', '3', '5#', '7b', '2'], name_zh: '增三和弦' }],
+	[2144, { tag: 'mM9', name: 'minor major ninth chord', constitute: ['1', '3b', '5', '7', '2'], name_zh: '小大九和弦' }],
+	[2243, { tag: 'augM9', name: 'augmented major ninth chord', constitute: ['1', '3', '5#', '7', '2'], name_zh: '增大九和弦' }],
+	[2242, { tag: 'aug9', name: 'augmented ninth chord', constitute: ['1', '3', '5#', '7b', '2'], name_zh: '增九和弦' }],
 	[2323, { tag: '9sus4', name: 'suspended 4 chord', constitute: ['1', '4', '5', '7b', '2'], name_zh: '属九挂四和弦' }],
 	[2232, { tag: '69', name: 'sixth ninth chord', constitute: ['1', '3', '5', '6', '2'], name_zh: '六九和弦' }],
 	[2142, { tag: 'm69', name: 'minor sixth ninth chord', constitute: ['1', '3b', '5', '6', '2'], name_zh: '小六九和弦' }],
@@ -85,10 +89,28 @@ const degreeMap = new Map<ModeType, DegreeType[]>([
  * 顺接和弦级数
  * 三和弦/七和弦/九和弦
  */
-const chordDegreeMap = new Map<ChordDegreeNum, number[]>([
-	[3, [1, 3, 5]],
-	[7, [1, 3, 5, 7]],
-	[9, [1, 3, 5, 7, 9]],
+const chordDegreeMap = new Map<ChordDegreeNum, { name: string; interval: number[] }>([
+	[
+		3,
+		{
+			name: 'triad',
+			interval: [1, 3, 5],
+		},
+	],
+	[
+		7,
+		{
+			name: 'seventh chord',
+			interval: [1, 3, 5, 7],
+		},
+	],
+	[
+		9,
+		{
+			name: 'ninth chord',
+			interval: [1, 3, 5, 7, 9],
+		},
+	],
 ])
 
 export { chordMap, degreeMap, chordDegreeMap }

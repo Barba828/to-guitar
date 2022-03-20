@@ -1,6 +1,7 @@
 {
 	"interval": "音程",
 	"note": "音名",
+	"scale": "音阶",
 	"semitones": "半音",
 	"triad": "三和弦",
 	"chord": "和弦",
