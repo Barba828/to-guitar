@@ -17,7 +17,7 @@ describe('Trans', () => {
 		// const chordsname = transChord('D', 'sus4')
 		// console.log(chordsname)
 		const scale = transScaleDegree({ chordNumType: 9 })
-		console.log(scale.map((item) => item.chordType))
+		console.log(scale.map((item) => item.chord))
 
 		const board2 = new Board((board) => {
 			// console.log(
@@ -27,8 +27,8 @@ describe('Trans', () => {
 		})
 
 		// const types = transChordType(['E', 'G', 'B', 'D', 'F#'])
-		// // const types = transChordType(['E', 'G#', 'B', 'D#', 'F#'])
+		const types = transChordType(['B', 'D', 'F', 'A', 'C#'])
 
-		// console.log(types)
+		console.log(types)
 	})
 })
