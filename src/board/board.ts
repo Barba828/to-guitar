@@ -81,6 +81,10 @@ class Board {
 		return this._board
 	}
 
+	/**
+	 * 设置Board属性，自动emit
+	 * @param options
+	 */
 	setOptions = (options: Partial<BoardOptionProps>) => {
 		const _options = { ...this._board, ...options }
 		const keys = Object.keys(options)
@@ -88,7 +92,7 @@ class Board {
 		/**
 		 * 更新 options 需要更新 顺阶和弦
 		 */
-		if (keys.includes('mode') || keys.includes('scale') || keys.includes('chordsType')) {
+		if (keys.includes('mode') || keys.includes('scale') || keys.includes('chordNumType')) {
 			const chords = this.getChords(_options)
 			_options.chords = chords
 		}
@@ -109,6 +113,23 @@ class Board {
 
 	private getChords = (options: BoardOptionProps) => {
 		return transScaleDegree({ mode: options.mode, scale: options.scale, chordNumType: options.chordNumType })
+	}
+
+	/**
+	 * 自定义 Keyboard point
+	 * @param points
+	 */
+	setKeyboardStatus = (points: Point[]) => {
+		points.forEach((point) => {
+			const boardPoint = this._board.keyboard[point.string][point.grade]
+			if (boardPoint) {
+				this._board.keyboard[point.string][point.grade] = { ...boardPoint, ...point }
+			}
+		})
+	}
+
+	resetKeyboardStatus = () => {
+		this._board.keyboard = this.getKeyBoard(this._board)
 	}
 }
 

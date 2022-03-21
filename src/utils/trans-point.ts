@@ -92,9 +92,9 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 		if (stringIndex > board.length - chords.length) {
 			return
 		}
-		grades.forEach((grade) => {
-			if (grade.toneSchema.note === root) {
-				roots.push(grade)
+		grades.forEach((point) => {
+			if (point.toneSchema.note === root && point.grade < 12) {
+				roots.push(point)
 			}
 		})
 	})
@@ -110,23 +110,25 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 			return
 		}
 
+		// findNextString(stringIndex + 1, [...taps])
 		const grades = board[stringIndex]
-		grades.forEach((grade) => {
-			if (chords.includes(grade.toneSchema.note)) {
-				if (taps.every((tap) => Math.abs(tap.grade - grade.grade) < fingerSpan)) {
-					findNextString(stringIndex + 1, [...taps, grade])
+		grades.forEach((point) => {
+			if (chords.includes(point.toneSchema.note) && point.grade < 12) {
+				// 若和其他按位品位不超过4，或者该品是0品，则加入指位
+				if (taps.every((tap) => Math.abs(tap.grade - point.grade) < fingerSpan) || point.grade === 0) {
+					findNextString(stringIndex + 1, [...taps, point])
 				}
 			}
 		})
 	}
 
 	// 获取所有根音下的和弦列表
-	roots.forEach((point) => {
+	roots.splice(1).forEach((point) => {
 		findNextString(point.string, [point])
 	})
 
 	/**
-	 * 过滤 和弦指法手指按位超过 fingerSpan（正常指法不超过4根手指）
+	 * 过滤 和弦指法手指按位超过 fingerSpan（正常指法不超过4根手指） & 手指不超过 1
 	 * @param taps
 	 */
 	const fingersFilter = (taps: Point[]) => {
@@ -138,7 +140,7 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 				fingerNums++
 			}
 		})
-		return fingerNums <= fingerSpan
+		return fingerNums <= fingerSpan && fingerNums > 1
 	}
 
 	/**
@@ -146,11 +148,6 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 	 * @param taps
 	 */
 	const integrityFilter = (taps: Point[]) => {
-		// const intervals = taps.reduce(
-		// 	(unique: Point['toneSchema']['interval'][], tap) =>
-		// 		unique.includes(tap.toneSchema.interval) ? unique : [...unique, tap.toneSchema.interval],
-		// 	[]
-		// )
 		const notes = new Set(taps.map((tap) => tap.toneSchema.note))
 		return notes.size === chords.length
 	}

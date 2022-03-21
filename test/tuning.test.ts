@@ -1,5 +1,5 @@
 import { Board } from '@/index'
-import { transBoard, transChordType, transChord, transScaleDegree, transFifthsCircle } from '@/utils'
+import { transBoard, transChordType, transChordTaps, transScaleDegree, transFifthsCircle } from '@/utils'
 
 describe('Trans', () => {
 	test('Trans Methods', () => {
@@ -16,8 +16,8 @@ describe('Trans', () => {
 
 		// const chordsname = transChord('D', 'sus4')
 		// console.log(chordsname)
-		const scale = transScaleDegree({ chordNumType: 9 })
-		console.log(scale.map((item) => item.chord))
+		// const scale = transScaleDegree({ chordNumType: 9 })
+		// console.log(scale.map((item) => item.chord))
 
 		const board2 = new Board((board) => {
 			// console.log(
@@ -27,8 +27,9 @@ describe('Trans', () => {
 		})
 
 		// const types = transChordType(['E', 'G', 'B', 'D', 'F#'])
-		const types = transChordType(['B', 'D', 'F', 'A', 'C#'])
+		// const taps = transChordTaps(['A', 'C', 'E', 'G'])
+		const taps = transChordTaps(['C', 'E', 'G', 'B', 'D'])
 
-		console.log(types)
+		console.log(taps.chordList.map((item) => item.map((item) => [item.string, item.grade])))
 	})
 })

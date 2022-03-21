@@ -75,6 +75,10 @@ declare type Point = {
      * 唯一下标
      */
     index: number;
+    /**
+     * 扩展属性
+     */
+    [key: string]: any;
 };
 
 declare type ChordType = {
@@ -250,9 +254,19 @@ declare class Board {
      */
     constructor(emit: (board: BoardOption) => void, options?: Partial<BoardOptionProps>);
     get board(): BoardOption;
+    /**
+     * 设置Board属性，自动emit
+     * @param options
+     */
     setOptions: (options: Partial<BoardOptionProps>) => void;
     private getKeyBoard;
     private getChords;
+    /**
+     * 自定义 Keyboard point
+     * @param points
+     */
+    setKeyboardStatus: (points: Point[]) => void;
+    resetKeyboardStatus: () => void;
 }
 
 /**

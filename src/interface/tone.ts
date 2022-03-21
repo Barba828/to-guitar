@@ -76,4 +76,8 @@ export type Point = {
 	 * 唯一下标
 	 */
 	index: number
+	/**
+	 * 扩展属性
+	 */
+	[key: string]: any
 }
