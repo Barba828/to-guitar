@@ -28,7 +28,7 @@ describe('Trans', () => {
 
 		// const types = transChordType(['E', 'G', 'B', 'D', 'F#'])
 		// const taps = transChordTaps(['A', 'C', 'E', 'G'])
-		const taps = transChordTaps(['C', 'E', 'G', 'B', 'D'])
+		const taps = transChordTaps(['E', 'G', 'B'])
 
 		console.log(taps.chordList.map((item) => item.map((item) => [item.string, item.grade])))
 	})

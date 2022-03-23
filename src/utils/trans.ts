@@ -72,6 +72,38 @@ const transChord = (tone: Tone, chordTypeTag: string = '') => {
 }
 
 /**
+ * 调式 & 调 => 顺阶音调
+ * @param {
+ *  @attr mode 调式 默认「major自然大调」
+ *  @attr scale 大调音阶 默认「C调」
+ * }
+ * @returns 大调音阶顺阶音调 数组
+ */
+const transScale = ({ mode = 'major', scale = 'C' }: { mode?: ModeType; scale?: Tone }): Chord[] => {
+	const note = transNote(scale)
+	const degreeArr = degreeMap.get(mode)
+
+	if (!degreeArr || !note) {
+		return []
+	}
+
+	const initIndex = NOTE_LIST.indexOf(note)
+	const noteLength = NOTE_LIST.length
+
+	// 根据大调顺阶degreeArr转换大调
+	return degreeArr.map((degree) => {
+		const curIndex = (initIndex + degree.interval) % noteLength
+		const tone = transTone(curIndex)
+		return {
+			degree,
+			tone,
+			chord: [] as Note[],
+			chordType: [] as ChordType[],
+		}
+	})
+}
+
+/**
  * 调式 & 调 => 顺阶和弦
  * @param {
  *  @attr mode 调式 默认「major自然大调」
@@ -89,29 +121,33 @@ const transScaleDegree = ({
 	scale?: Tone
 	chordNumType?: ChordDegreeNum
 }): Chord[] => {
-	const note = transNote(scale)
-	const degreeArr = degreeMap.get(mode)
+	// const note = transNote(scale)
+	// const degreeArr = degreeMap.get(mode)
 
-	if (!degreeArr || !note) {
-		return []
-	}
+	// if (!degreeArr || !note) {
+	// 	return []
+	// }
 
-	const initIndex = NOTE_LIST.indexOf(note)
-	const noteLength = NOTE_LIST.length
-	const degreeLength = degreeArr.length
-	const chordScale = chordDegreeMap.get(chordNumType)?.interval || [] // 顺阶和弦级数增量
+	// const initIndex = NOTE_LIST.indexOf(note)
+	// const noteLength = NOTE_LIST.length
+	// const degreeLength = degreeArr.length
+	// const chordScale = chordDegreeMap.get(chordNumType)?.interval || [] // 顺阶和弦级数增量
 
 	// 根据大调顺阶degreeArr转换大调
-	const degrees = degreeArr.map((degree) => {
-		const curIndex = (initIndex + degree.interval) % noteLength
-		const tone = transTone(curIndex)
-		return {
-			degree,
-			tone,
-			chord: [] as Note[],
-			chordType: [] as ChordType[],
-		}
-	})
+	// const degrees = degreeArr.map((degree) => {
+	// 	const curIndex = (initIndex + degree.interval) % noteLength
+	// 	const tone = transTone(curIndex)
+	// 	return {
+	// 		degree,
+	// 		tone,
+	// 		chord: [] as Note[],
+	// 		chordType: [] as ChordType[],
+	// 	}
+	// })
+
+	const degrees = transScale({ mode, scale })
+	const degreeLength = degrees.length
+	const chordScale = chordDegreeMap.get(chordNumType)?.interval || [] // 顺阶和弦级数增量
 
 	// 根据转换的大调获取大调和弦
 	degrees.forEach((degree, index) => {
@@ -160,4 +196,4 @@ const transFifthsCircle = (root: Tone = 'C') => {
 	})
 }
 
-export { transChord, transChordType, transScaleDegree, transFifthsCircle }
+export { transChord, transChordType, transScale, transScaleDegree, transFifthsCircle }

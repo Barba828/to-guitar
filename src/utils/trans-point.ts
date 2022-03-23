@@ -89,10 +89,12 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 	// 检索根音位置
 	board.forEach((grades, stringIndex) => {
 		// 有几根弦 > 和弦音数
-		if (stringIndex > board.length - chords.length) {
+		if (stringIndex > board.length - chords.length || stringIndex > 2) {
+			// 遍历到四弦返回（一般不参考只有三根弦的和弦）
 			return
 		}
 		grades.forEach((point) => {
+			// 根音位置也在第一个八度内（12品）
 			if (point.toneSchema.note === root && point.grade < 12) {
 				roots.push(point)
 			}
@@ -110,10 +112,11 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 			return
 		}
 
+		// 暂不考虑跳过当前弦选下一根弦的情况
 		// findNextString(stringIndex + 1, [...taps])
 		const grades = board[stringIndex]
 		grades.forEach((point) => {
-			if (chords.includes(point.toneSchema.note) && point.grade < 12) {
+			if (chords.includes(point.toneSchema.note)) {
 				// 若和其他按位品位不超过4，或者该品是0品，则加入指位
 				if (taps.every((tap) => Math.abs(tap.grade - point.grade) < fingerSpan) || point.grade === 0) {
 					findNextString(stringIndex + 1, [...taps, point])
@@ -123,12 +126,14 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 	}
 
 	// 获取所有根音下的和弦列表
-	roots.splice(1).forEach((point) => {
+	roots.forEach((point) => {
 		findNextString(point.string, [point])
 	})
 
 	/**
-	 * 过滤 和弦指法手指按位超过 fingerSpan（正常指法不超过4根手指） & 手指不超过 1
+	 * 过滤 和弦指法手指按位超过 fingerSpan（正常指法不超过4根手指）
+	 * 		& 手指不超过 1
+	 * 		& 最小品不超过 12 （超过12品重复的八度音高）
 	 * @param taps
 	 */
 	const fingersFilter = (taps: Point[]) => {
@@ -140,7 +145,7 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 				fingerNums++
 			}
 		})
-		return fingerNums <= fingerSpan && fingerNums > 1
+		return fingerNums <= fingerSpan && fingerNums > 1 && minGrade < 12
 	}
 
 	/**
