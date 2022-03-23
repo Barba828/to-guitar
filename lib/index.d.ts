@@ -156,6 +156,18 @@ declare const transChord: (tone: Tone, chordTypeTag?: string) => {
     chordType: ChordType;
 } | null;
 /**
+ * 调式 & 调 => 顺阶音调
+ * @param {
+ *  @attr mode 调式 默认「major自然大调」
+ *  @attr scale 大调音阶 默认「C调」
+ * }
+ * @returns 大调音阶顺阶音调 数组
+ */
+declare const transScale: ({ mode, scale }: {
+    mode?: ModeType | undefined;
+    scale?: Tone | undefined;
+}) => Chord[];
+/**
  * 调式 & 调 => 顺阶和弦
  * @param {
  *  @attr mode 调式 默认「major自然大调」
@@ -321,4 +333,4 @@ declare const chordDegreeMap: Map<ChordDegreeNum, {
     interval: number[];
 }>;
 
-export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScaleDegree, transTone };
+export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScale, transScaleDegree, transTone };
