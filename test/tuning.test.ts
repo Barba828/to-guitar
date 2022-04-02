@@ -1,4 +1,4 @@
-import { Board } from '@/index'
+import { Board, chordMap } from '@/index'
 import { transBoard, transChordType, transChordTaps, transScaleDegree, transFifthsCircle } from '@/utils'
 
 describe('Trans', () => {
@@ -16,20 +16,24 @@ describe('Trans', () => {
 
 		// const chordsname = transChord('D', 'sus4')
 		// console.log(chordsname)
-		// const scale = transScaleDegree({ chordNumType: 9 })
+		const scale = transScaleDegree({ chordNumType: 9 })
+
+		// console.log(chordMap.size)
+		// console.log(new Set(chordMap.keys()).size)
+
 		// console.log(scale.map((item) => item.chord))
 
-		const board2 = new Board((board) => {
-			// console.log(
-			// 	'lnz',
-			// 	board.keyboard.map((item) => item[0].toneSchema.note)
-			// )
-		})
+		// const board2 = new Board((board) => {
+		// 	// console.log(
+		// 	// 	'lnz',
+		// 	// 	board.keyboard.map((item) => item[0].toneSchema.note)
+		// 	// )
+		// })
 
 		// const types = transChordType(['E', 'G', 'B', 'D', 'F#'])
 		// const taps = transChordTaps(['A', 'C', 'E', 'G'])
-		const taps = transChordTaps(['E', 'G', 'B'])
+		// const taps = transChordTaps(['E', 'G', 'B'])
 
-		console.log(taps.chordList.map((item) => item.map((item) => [item.string, item.grade])))
+		// console.log(taps.chordList.map((item) => item.map((item) => [item.string, item.grade])))
 	})
 })

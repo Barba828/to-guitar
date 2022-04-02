@@ -121,30 +121,6 @@ const transScaleDegree = ({
 	scale?: Tone
 	chordNumType?: ChordDegreeNum
 }): Chord[] => {
-	// const note = transNote(scale)
-	// const degreeArr = degreeMap.get(mode)
-
-	// if (!degreeArr || !note) {
-	// 	return []
-	// }
-
-	// const initIndex = NOTE_LIST.indexOf(note)
-	// const noteLength = NOTE_LIST.length
-	// const degreeLength = degreeArr.length
-	// const chordScale = chordDegreeMap.get(chordNumType)?.interval || [] // 顺阶和弦级数增量
-
-	// 根据大调顺阶degreeArr转换大调
-	// const degrees = degreeArr.map((degree) => {
-	// 	const curIndex = (initIndex + degree.interval) % noteLength
-	// 	const tone = transTone(curIndex)
-	// 	return {
-	// 		degree,
-	// 		tone,
-	// 		chord: [] as Note[],
-	// 		chordType: [] as ChordType[],
-	// 	}
-	// })
-
 	const degrees = transScale({ mode, scale })
 	const degreeLength = degrees.length
 	const chordScale = chordDegreeMap.get(chordNumType)?.interval || [] // 顺阶和弦级数增量
@@ -153,7 +129,7 @@ const transScaleDegree = ({
 	degrees.forEach((degree, index) => {
 		degree.chord = chordScale.map((scale) => degrees[(index + scale - 1) % degreeLength].tone.note)
 		if (chordNumType === 9) {
-			// 九和弦的九度音（最后一位）必须是严格的根音+2度音
+			// 九和弦的九度音（最后一位）与根音关系必须是大二度，比如 E 的九音是 F#，而不是 F
 			const ninthIndex = (NOTE_LIST.indexOf(degree.chord[0]) + 2) % NOTE_LIST.length
 			degree.chord.splice(4)
 			degree.chord.push(NOTE_LIST[ninthIndex])

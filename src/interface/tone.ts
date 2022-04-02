@@ -2,6 +2,26 @@ export type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A'
 export type NoteFalling = 'C' | 'Db' | 'D' | 'Eb' | 'E' | 'F' | 'Gb' | 'G' | 'Ab' | 'A' | 'Bb' | 'B'
 export type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7'
 export type IntervalFalling = '1' | '2b' | '2' | '3b' | '3' | '4' | '5b' | '5' | '6b' | '6' | '7b' | '7'
+export type IntervalAll =
+	| Interval
+	| IntervalFalling
+	| '8'
+	| '8#'
+	| '9b'
+	| '9'
+	| '9#'
+	| '10b'
+	| '10'
+	| '11'
+	| '11#'
+	| '12b'
+	| '12'
+	| '12#'
+	| '13b'
+	| '13'
+	| '13#'
+	| '14b'
+	| '14'
 type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
 /**
  * 音符类型

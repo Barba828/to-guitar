@@ -1,4 +1,4 @@
-import type { Interval, IntervalFalling, Note, ToneSchema } from './tone'
+import type { IntervalAll, Note, ToneSchema } from './tone'
 
 export type ChordType = {
 	/**
@@ -18,7 +18,7 @@ export type ChordType = {
 	/**
 	 * 和弦组成音
 	 */
-	constitute?: (Interval | IntervalFalling)[]
+	constitute?: IntervalAll[]
 	/**
 	 * 和弦根音名
 	 * C|D|...

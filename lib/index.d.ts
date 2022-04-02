@@ -2,6 +2,7 @@ declare type Note = 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G' | 'G#' | 'A
 declare type NoteFalling = 'C' | 'Db' | 'D' | 'Eb' | 'E' | 'F' | 'Gb' | 'G' | 'Ab' | 'A' | 'Bb' | 'B';
 declare type Interval = '1' | '1#' | '2' | '2#' | '3' | '4' | '4#' | '5' | '5#' | '6' | '6#' | '7';
 declare type IntervalFalling = '1' | '2b' | '2' | '3b' | '3' | '4' | '5b' | '5' | '6b' | '6' | '7b' | '7';
+declare type IntervalAll = Interval | IntervalFalling | '8' | '8#' | '9b' | '9' | '9#' | '10b' | '10' | '11' | '11#' | '12b' | '12' | '12#' | '13b' | '13' | '13#' | '14b' | '14';
 declare type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 /**
  * 音符类型
@@ -99,7 +100,7 @@ declare type ChordType = {
     /**
      * 和弦组成音
      */
-    constitute?: (Interval | IntervalFalling)[];
+    constitute?: IntervalAll[];
     /**
      * 和弦根音名
      * C|D|...
@@ -333,4 +334,4 @@ declare const chordDegreeMap: Map<ChordDegreeNum, {
     interval: number[];
 }>;
 
-export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalFalling, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScale, transScaleDegree, transTone };
+export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalAll, IntervalFalling, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScale, transScaleDegree, transTone };
