@@ -20,6 +20,7 @@ const chordMap = new Map<number, ChordType>([
 	[223, { tag: 'add9', name: 'addition 9 chord', constitute: ['1', '3', '5', '9'], name_zh: '加九和弦' }],
 	[214, { tag: 'madd9', name: 'minor addition 9 chord', constitute: ['1', '3b', '5', '9'], name_zh: '小加九和弦' }],
 	[412, { tag: 'add11', name: 'addition 11 chord', constitute: ['1', '3', '5', '11'], name_zh: '加十一和弦' }],
+	[322, { tag: 'madd11', name: 'minor addition 11 chord', constitute: ['1', '3b', '5', '11'], name_zh: '小加十一和弦' }],
 
 	/**
 	 * 七和弦
