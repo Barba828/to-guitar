@@ -1,5 +1,5 @@
-import { Board, chordMap } from '@/index'
-import { transBoard, transChordType, transChordTaps, transScaleDegree, transFifthsCircle } from '@/utils'
+import { Board, chordMap } from '../src/index'
+import { transBoard, transChordType, transChordTaps, transScaleDegree, transFifthsCircle } from '../src/utils'
 
 describe('Trans', () => {
 	test('Trans Methods', () => {

@@ -1,4 +1,4 @@
-import { DEFAULT_LEVEL, DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '@/config'
+import { DEFAULT_LEVEL, DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '../config'
 import type { Tone, Point } from '../interface'
 import { transChordType } from './trans'
 import { transTone, transNote } from './trans-tone'

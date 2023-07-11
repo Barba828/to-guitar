@@ -1,7 +1,7 @@
-import { transBoard, transScaleDegree } from '@/index'
+import { transBoard, transScaleDegree } from '../index'
 import type { Chord, ChordDegreeNum, ModeType, Point, Tone } from '../interface'
-import { DEFAULT_LEVEL, DEFAULT_TUNE, GRADE_NUMS } from '@/config'
-import { OnChange } from '@/utils/on-change'
+import { DEFAULT_LEVEL, DEFAULT_TUNE, GRADE_NUMS } from '../config'
+import { OnChange } from '../utils/on-change'
 
 type BoardOption = {
 	/**

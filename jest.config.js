@@ -7,6 +7,6 @@ module.exports = {
 	testEnvironment: 'node',
 	rootDir: path.join(__dirname, '.'),
 	moduleNameMapper: {
-		'@/(.*)$': '<rootDir>/src/$1',
+		// '@/(.*)$': '<rootDir>/src/$1',
 	},
 }

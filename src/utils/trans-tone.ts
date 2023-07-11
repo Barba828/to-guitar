@@ -1,4 +1,4 @@
-import { NOTE_LIST, NOTE_FALLING_LIST, INTERVAL_LIST, INTERVAL_FALLING_LIST } from '@/config'
+import { NOTE_LIST, NOTE_FALLING_LIST, INTERVAL_LIST, INTERVAL_FALLING_LIST } from '../config'
 import type { Tone, Note, Interval, ToneSchema, NoteFalling, IntervalFalling, ToneTypeName } from '../interface'
 
 // overload
