@@ -21,7 +21,7 @@ type IntervalExtended =
 	| '14b'
 	| '14'
 export type IntervalAll = Interval | IntervalFalling | IntervalExtended
-type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
+export type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
 /**
  * 音符类型
  */

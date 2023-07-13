@@ -128,9 +128,9 @@ declare type DegreeType = {
     interval: number;
     /**
      * 级数
-     * 罗马数字标记
+     * 数字标记
      */
-    tag: DegreeTag;
+    degreeNum: number;
     /**
      * 级数类型
      */
@@ -147,6 +147,12 @@ declare type Chord = {
     chordType: ChordType[];
 };
 
+/**
+ * 数字级数 => 罗马级数
+ * @param degree
+ * @returns
+ */
+declare const getDegreeTag: (degree: string | number) => string;
 /**
  * 和弦根音 => 和弦
  * @param tone 根音
@@ -302,6 +308,7 @@ declare const NOTE_SORT: Note[];
  * https://learningmusic.ableton.com/zh-Hans/advanced-topics/modes.html
  */
 declare const MODE_LIST: ModeType[];
+declare const DEGREE_TAG_MAP: Record<IntervalNum, DegreeTag>;
 /**
  * 品柱数量
  */
@@ -335,4 +342,4 @@ declare const chordDegreeMap: Map<ChordDegreeNum, {
     interval: number[];
 }>;
 
-export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalAll, IntervalFalling, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScale, transScaleDegree, transTone };
+export { Board, BoardOption, BoardOptionProps, Chord, ChordDegreeNum, ChordType, DEFAULT_LEVEL, DEFAULT_TUNE, DEGREE_TAG_MAP, DegreeTag, DegreeType, FINGER_GRADE_NUMS, GRADE_NUMS, INTERVAL_FALLING_LIST, INTERVAL_LIST, Interval, IntervalAll, IntervalFalling, IntervalNum, MODE_LIST, ModeType, NOTE_FALLING_LIST, NOTE_LIST, NOTE_SORT, Note, NoteFalling, Pitch, Point, RollType, STRING_NUMS, Tone, ToneSchema, ToneTypeName, chordDegreeMap, chordMap, defaultOptions as defaultBoardOptions, degreeMap, getDegreeTag, transBoard, transChord, transChordTaps, transChordType, transFifthsCircle, transNote, transScale, transScaleDegree, transTone };

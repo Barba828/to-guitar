@@ -2,7 +2,7 @@
  * 乐理知识配置
  */
 
-import type { Note, NoteFalling, Interval, IntervalFalling, ModeType } from '../interface'
+import type { Note, NoteFalling, Interval, IntervalFalling, ModeType, DegreeTag, IntervalNum } from '../interface'
 
 /**
  * 音高Interval数组
@@ -19,6 +19,16 @@ export const NOTE_SORT: Note[] = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C']
  * https://learningmusic.ableton.com/zh-Hans/advanced-topics/modes.html
  */
 export const MODE_LIST: ModeType[] = ['major', 'minor']
+
+export const DEGREE_TAG_MAP: Record<IntervalNum, DegreeTag> = {
+	1: 'Ⅰ',
+	2: 'Ⅱ',
+	3: 'Ⅲ',
+	4: 'Ⅳ',
+	5: 'Ⅴ',
+	6: 'Ⅵ',
+	7: 'Ⅶ',
+}
 
 // export const SEMITONES_LENGTH = NOTE_LIST.length
 

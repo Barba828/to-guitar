@@ -1,4 +1,4 @@
-import type { IntervalAll, Note, ToneSchema } from './tone'
+import type { IntervalAll, Note, ToneSchema } from './tone.type'
 
 export type ChordType = {
 	/**
@@ -45,9 +45,9 @@ export type DegreeType = {
 	interval: number
 	/**
 	 * 级数
-	 * 罗马数字标记
+	 * 数字标记
 	 */
-	tag: DegreeTag
+	degreeNum: number
 	/**
 	 * 级数类型
 	 */

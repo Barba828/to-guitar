@@ -1,2 +1,2 @@
-export * from './chord'
-export * from './tone'
+export * from './chord.type'
+export * from './tone.type'

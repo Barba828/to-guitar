@@ -85,25 +85,25 @@ const degreeMap = new Map<ModeType, DegreeType[]>([
 	[
 		'major', // 自然大调
 		[
-			{ interval: 0, tag: 'Ⅰ', scale: 'Tonic', roll: 'Do' }, // 主，稳定
-			{ interval: 2, tag: 'Ⅱ', scale: 'Supertonic', roll: 'Re' }, // 上主
-			{ interval: 4, tag: 'Ⅲ', scale: 'Mediant', roll: 'Mi' }, // 中，张力很小
-			{ interval: 5, tag: 'Ⅳ', scale: 'Subdominant', roll: 'Fa' }, // 下属，张力模糊
-			{ interval: 7, tag: 'Ⅴ', scale: 'Dominant', roll: 'So' }, // 属，张力大而和谐
-			{ interval: 9, tag: 'Ⅵ', scale: 'Submediant', roll: 'La' }, // 下中
-			{ interval: 11, tag: 'Ⅶ', scale: 'Leading Tone', roll: 'Ti' }, // 导，张力最大
+			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' }, // 主，稳定
+			{ interval: 2, degreeNum: 2, scale: 'Supertonic', roll: 'Re' }, // 上主
+			{ interval: 4, degreeNum: 3, scale: 'Mediant', roll: 'Mi' }, // 中，张力很小
+			{ interval: 5, degreeNum: 4, scale: 'Subdominant', roll: 'Fa' }, // 下属，张力模糊
+			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' }, // 属，张力大而和谐
+			{ interval: 9, degreeNum: 6, scale: 'Submediant', roll: 'La' }, // 下中
+			{ interval: 11, degreeNum: 7, scale: 'Leading Tone', roll: 'Ti' }, // 导，张力最大
 		],
 	],
 	[
 		'minor', // 自然小调
 		[
-			{ interval: 0, tag: 'Ⅰ', scale: 'Tonic', roll: 'Do' }, // 主
-			{ interval: 2, tag: 'Ⅱ', scale: 'Supertonic', roll: 'Re' }, // 上主
-			{ interval: 3, tag: 'Ⅲ', scale: 'Mediant', roll: 'Mi' }, // 中
-			{ interval: 5, tag: 'Ⅳ', scale: 'Subdominant', roll: 'Fa' }, // 下属
-			{ interval: 7, tag: 'Ⅴ', scale: 'Dominant', roll: 'So' }, // 属
-			{ interval: 8, tag: 'Ⅵ', scale: 'Submediant', roll: 'Le' }, // 下中 旋律小调 interval = 9, roll = 'La'
-			{ interval: 10, tag: 'Ⅶ', scale: 'SubTonic', roll: 'Te' }, // 下主 和声小调/旋律小调 interval = 11, roll = 'Ti' 即为 导音
+			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' }, // 主
+			{ interval: 2, degreeNum: 2, scale: 'Supertonic', roll: 'Re' }, // 上主
+			{ interval: 3, degreeNum: 3, scale: 'Mediant', roll: 'Mi' }, // 中
+			{ interval: 5, degreeNum: 4, scale: 'Subdominant', roll: 'Fa' }, // 下属
+			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' }, // 属
+			{ interval: 8, degreeNum: 6, scale: 'Submediant', roll: 'Le' }, // 下中 旋律小调 interval = 9, roll = 'La'
+			{ interval: 10, degreeNum: 7, scale: 'SubTonic', roll: 'Te' }, // 下主 和声小调/旋律小调 interval = 11, roll = 'Ti' 即为 导音
 		],
 	],
 	// @todo [...]

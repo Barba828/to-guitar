@@ -1,5 +1,5 @@
-import { NOTE_LIST, chordMap, degreeMap, chordDegreeMap } from '../config'
-import type { Note, Tone, ChordType, ChordDegreeNum, ModeType, Chord } from '../interface'
+import { NOTE_LIST, chordMap, degreeMap, chordDegreeMap, DEGREE_TAG_MAP } from '../config'
+import type { Note, Tone, ChordType, ChordDegreeNum, ModeType, Chord, IntervalNum } from '../interface'
 import { transNote, transTone } from './trans-tone'
 
 /**
@@ -36,6 +36,16 @@ const getChordType = (chords: Note[]): ChordType[] => {
 		}
 	})
 	return chordList
+}
+
+/**
+ * 数字级数 => 罗马级数
+ * @param degree 
+ * @returns 
+ */
+const getDegreeTag = (degree: string | number) => {
+	const str = degree.toString()
+	return str.replace(/[1-7]/g, (match) => DEGREE_TAG_MAP[Number(match) as IntervalNum])
 }
 
 /**
@@ -172,4 +182,4 @@ const transFifthsCircle = (root: Tone = 'C') => {
 	})
 }
 
-export { transChord, transChordType, transScale, transScaleDegree, transFifthsCircle }
+export { getDegreeTag, transChord, transChordType, transScale, transScaleDegree, transFifthsCircle }
