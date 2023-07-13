@@ -16,23 +16,12 @@ export default [
 	{
 		input: './src/index.ts',
 		output: [
-			// {
-			//     file: './lib/index.cjs.js',
-			//     format: 'cjs',
-			//     footer,
-			// },
 			{
 				file: './lib/index.esm.js',
 				format: 'esm',
 				footer,
 				sourcemap: true,
 			},
-			// {
-			//     file: './lib/index.umd.js',
-			//     format: 'umd',
-			//     name: 'Dry',
-			//     footer,
-			// },
 		],
 		plugins: [typescript(), commonjs(), resolve()],
 	},
