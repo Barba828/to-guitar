@@ -40,12 +40,15 @@ const getChordType = (chords: Note[]): ChordType[] => {
 
 /**
  * 数字级数 => 罗马级数
- * @param degree 
- * @returns 
+ * @param degree
+ * @returns
  */
 const getDegreeTag = (degree: string | number) => {
-	const str = degree.toString()
-	return str.replace(/[1-7]/g, (match) => DEGREE_TAG_MAP[Number(match) as IntervalNum])
+	const num = degree.toString().match(/[1-7]/g)?.[0]
+	if (!num) {
+		return ''
+	}
+	return DEGREE_TAG_MAP[Number(num) as IntervalNum]
 }
 
 /**

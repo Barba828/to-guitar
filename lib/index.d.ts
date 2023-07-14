@@ -152,7 +152,7 @@ declare type Chord = {
  * @param degree
  * @returns
  */
-declare const getDegreeTag: (degree: string | number) => string;
+declare const getDegreeTag: (degree: string | number) => DegreeTag | "";
 /**
  * 和弦根音 => 和弦
  * @param tone 根音
