@@ -27,9 +27,12 @@ export type IntervalNum = 1 | 2 | 3 | 4 | 5 | 6 | 7
  */
 export type Tone = Note | NoteFalling | Interval | IntervalFalling | IntervalNum
 /**
- * ToneType名称
+ * 音符类型ToneType名称
  */
 export type ToneTypeName = 'note' | 'noteFalling' | 'interval' | 'intervalFalling'
+/**
+ * 音符Schema
+ */
 export type ToneSchema = {
 	/**
 	 * 音名 升调
@@ -61,6 +64,9 @@ export type ToneSchema = {
 	 */
 	level?: number
 }
+/**
+ * 绝对音高
+ */
 export type Pitch = number
 
 /**
@@ -82,12 +88,12 @@ export type Point = {
 	 */
 	toneSchema: ToneSchema
 	/**
-	 * 弦位
+	 * 弦位 1弦开始
 	 * string position
 	 */
 	string: number
 	/**
-	 * 品位
+	 * 品位 0品开始
 	 * grade position
 	 */
 	grade: number
@@ -100,3 +106,11 @@ export type Point = {
 	 */
 	[key: string]: any
 }
+/**
+ * 吉他某弦指板音符位置
+ */
+export type GuitarString = Point[]
+/**
+ * 吉他全指板指板音符位置
+ */
+export type GuitarBoard = GuitarString[]

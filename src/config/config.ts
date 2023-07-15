@@ -1,7 +1,6 @@
 /**
- * 乐理知识配置
+ * 音符基础配置
  */
-
 import type { Note, NoteFalling, Interval, IntervalFalling, ModeType, DegreeTag, IntervalNum } from '../interface'
 
 /**
@@ -14,11 +13,23 @@ export const INTERVAL_FALLING_LIST: IntervalFalling[] = ['1', '2b', '2', '3b', '
 export const DEFAULT_TUNE: Note[] = ['E', 'A', 'D', 'G', 'B', 'E']
 export const DEFAULT_LEVEL = 2
 export const NOTE_SORT: Note[] = ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C']
-/**
- * 'dorian', 'phrygian', 'lydian', 'mixolydian', 'aeolian', 'locrian'
- * https://learningmusic.ableton.com/zh-Hans/advanced-topics/modes.html
- */
-export const MODE_LIST: ModeType[] = ['major', 'minor']
+export const MODE_LIST: ModeType[] = [
+	// 标准七度
+	'major', // 中古调式dorian
+	'minor', // 中古调式aeolian
+	// 中古调式
+	'dorian',
+	'phrygian',
+	'lydian',
+	'mixolydian',
+	'locrian',
+	// 五度
+	'major-pentatonic',
+	'minor-pentatonic',
+	// 布鲁斯
+	'major-blues',
+	'minor-blues',
+]
 
 export const DEGREE_TAG_MAP: Record<IntervalNum, DegreeTag> = {
 	1: 'Ⅰ',

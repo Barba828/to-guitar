@@ -1,3 +1,6 @@
+/**
+ * 和弦配置
+ */
 import type { ChordDegreeNum, ChordType, DegreeType, ModeType } from '../interface'
 
 /**
@@ -83,7 +86,7 @@ const chordMap = new Map<number, ChordType>([
  */
 const degreeMap = new Map<ModeType, DegreeType[]>([
 	[
-		'major', // 自然大调
+		'major', // 自然大调 Ionian
 		[
 			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' }, // 主，稳定
 			{ interval: 2, degreeNum: 2, scale: 'Supertonic', roll: 'Re' }, // 上主
@@ -95,7 +98,7 @@ const degreeMap = new Map<ModeType, DegreeType[]>([
 		],
 	],
 	[
-		'minor', // 自然小调
+		'minor', // 自然小调 Aeolian
 		[
 			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' }, // 主
 			{ interval: 2, degreeNum: 2, scale: 'Supertonic', roll: 'Re' }, // 上主
@@ -104,6 +107,66 @@ const degreeMap = new Map<ModeType, DegreeType[]>([
 			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' }, // 属
 			{ interval: 8, degreeNum: 6, scale: 'Submediant', roll: 'Le' }, // 下中 旋律小调 interval = 9, roll = 'La'
 			{ interval: 10, degreeNum: 7, scale: 'SubTonic', roll: 'Te' }, // 下主 和声小调/旋律小调 interval = 11, roll = 'Ti' 即为 导音
+		],
+	],
+	[
+		/**
+		 * 大调五度音阶音程关系
+		 * 音：1 2 3 5 6 | CDEGA
+		 * 宫商角徴羽（宫调式 ）
+		 */
+		'major-pentatonic',
+		[
+			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' },
+			{ interval: 2, degreeNum: 2, scale: 'Supertonic', roll: 'Re' },
+			{ interval: 4, degreeNum: 3, scale: 'Mediant', roll: 'Mi' },
+			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' },
+			{ interval: 9, degreeNum: 6, scale: 'Submediant', roll: 'La' },
+		],
+	],
+	[
+		/**
+		 * 小调五度音阶音程关系
+		 * 音：1 b3 4 5 b7 | ACDEG
+		 * 羽宫商角徴（羽调式）
+		 */
+		'minor-pentatonic',
+		[
+			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' },
+			{ interval: 3, degreeNum: 3, scale: 'Mediant', roll: 'Mi' },
+			{ interval: 5, degreeNum: 4, scale: 'Subdominant', roll: 'Fa' },
+			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' },
+			{ interval: 10, degreeNum: 7, scale: 'SubTonic', roll: 'Te' },
+		],
+	],
+	[
+		/**
+		 * 大调布鲁斯
+		 * 大调五声音阶中加入了降III级的音
+		 */
+		'major-blues',
+		[
+			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' },
+			{ interval: 2, degreeNum: 2, scale: 'Supertonic', roll: 'Re' },
+			{ interval: 3, degreeNum: 3, scale: 'Mediant', roll: 'Mi' }, // scale & roll error
+			{ interval: 4, degreeNum: 3, scale: 'Mediant', roll: 'Mi' },
+			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' },
+			{ interval: 9, degreeNum: 6, scale: 'Submediant', roll: 'La' },
+		],
+	],
+	[
+		/**
+		 * 小调布鲁斯
+		 * 小调五声音阶添加了一个升IV级音
+		 */
+		'minor-blues',
+		[
+			{ interval: 0, degreeNum: 1, scale: 'Tonic', roll: 'Do' },
+			{ interval: 3, degreeNum: 3, scale: 'Mediant', roll: 'Mi' },
+			{ interval: 5, degreeNum: 4, scale: 'Subdominant', roll: 'Fa' },
+			{ interval: 6, degreeNum: 4, scale: 'Subdominant', roll: 'Fa' }, // scale & roll error
+			{ interval: 7, degreeNum: 5, scale: 'Dominant', roll: 'So' },
+			{ interval: 10, degreeNum: 7, scale: 'SubTonic', roll: 'Te' },
 		],
 	],
 	// @todo [...]

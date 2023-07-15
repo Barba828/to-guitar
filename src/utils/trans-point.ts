@@ -1,5 +1,5 @@
-import { DEFAULT_LEVEL, DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST } from '../config'
-import type { Tone, Point } from '../interface'
+import { DEFAULT_LEVEL, DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST, degreeMap } from '../config'
+import type { Tone, Point, GuitarBoard, GuitarString, ModeType, Pitch } from '../interface'
 import { transChordType } from './trans'
 import { transTone, transNote } from './trans-tone'
 
@@ -48,7 +48,7 @@ const transBoard = (zeroTones: Tone[] = DEFAULT_TUNE, GradeLength: number = GRAD
 	const zeroPitchs = getAdditionPitchs(zeroTones)
 
 	const boardNums = zeroPitchs.map((zeroPitch, stringIndex) => {
-		const stringNums = []
+		const stringNums: GuitarString = []
 		for (let grade = 0; grade < GradeLength; grade++) {
 			const pitch = zeroPitch + grade
 			const tone = pitch % NOTE_LIST.length
@@ -71,7 +71,7 @@ const transBoard = (zeroTones: Tone[] = DEFAULT_TUNE, GradeLength: number = GRAD
 		return stringNums
 	})
 
-	return boardNums
+	return boardNums as GuitarBoard
 }
 
 /**
@@ -80,7 +80,7 @@ const transBoard = (zeroTones: Tone[] = DEFAULT_TUNE, GradeLength: number = GRAD
  * @param board 指板数组
  * @param fingerSpan 手指品位跨度
  */
-const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSpan: number = FINGER_GRADE_NUMS) => {
+const transChordTaps = (tones: Tone[], board: GuitarBoard = transBoard(), fingerSpan: number = FINGER_GRADE_NUMS) => {
 	const chords = transNote(tones)
 	const root = chords[0] //当前根音
 	const roots: Point[] = [] // 指板上的所有根音 数组
@@ -174,7 +174,66 @@ const transChordTaps = (tones: Tone[], board: Point[][] = transBoard(), fingerSp
 	return { chordType, chordList }
 }
 
+/**
+ * 获取调式音阶基础指法
+ * @param root 根音
+ * @param board 指板
+ * @param mode 调式
+ */
+const getModeFregTaps = (root: Point, board: GuitarBoard = transBoard(), mode: ModeType = 'minor-pentatonic') => {
+	let up: Point[] = [],
+		down: Point[] = []
+	// 获取该调式音程关系
+	const intervals = degreeMap.get(mode)?.map((item) => item.interval)
+	if (!intervals) {
+		return { up, down }
+	}
+
+	// 获取有效相对音高，在根音品数range范围内的所有相对音高符合即可
+	const rootTone = root.tone // 根音相对音高
+	// 音阶相对音高
+	const toneList = intervals.map((interval) => (interval + rootTone) % 12)
+
+	const rootGrade = root.grade // 根音品位置
+	// 音阶上行指法
+	if (mode.includes('major') && (root.string === 1 || root.string === 5 || root.string === 6)) {
+		up = getTapsFromBoard(toneList, board, [rootGrade - 4, rootGrade])
+	} else {
+		up = getTapsFromBoard(toneList, board, [rootGrade - 3, rootGrade + 1])
+	}
+	// 音阶下行指法
+	if (mode.includes('minor') && (root.string === 2 || root.string === 4)) {
+		down = getTapsFromBoard(toneList, board, [rootGrade, rootGrade + 4])
+	} else {
+		down = getTapsFromBoard(toneList, board, [rootGrade - 1, rootGrade + 3])
+	}
+	return { up, down }
+}
+
+/**
+ * 通过相对音高获取指板范围内所有符合音高的指位
+ * @param tones 相对音高
+ * @param board 吉他指板
+ * @param range 指板范围
+ * @returns
+ */
+const getTapsFromBoard = (tones: Pitch[], board: GuitarBoard = transBoard(), range: number[] = []) => {
+	const points: Point[] = []
+	// 默认范围取 0 ～ 指板长度
+	let [start = 0, end = board[0].length - 1] = range
+	for (let string = 0; string < 6; string++) {
+		for (let grade = start; grade <= end; grade++) {
+			const point = board[string][grade]
+			if (point && tones.includes(point.tone) && !points.find((p) => p.pitch === point.pitch)) {
+				points.push(point)
+			}
+		}
+	}
+	return points
+}
+
 export {
 	transBoard, // 二维指板数组
 	transChordTaps, // 和弦指板位置
+	getModeFregTaps, // 获取调式音阶基础指法
 }
