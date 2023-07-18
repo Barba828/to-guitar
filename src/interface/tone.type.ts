@@ -65,7 +65,7 @@ export type ToneSchema = {
 	level?: number
 }
 /**
- * 绝对音高
+ * 数字音高 0 ～ *
  */
 export type Pitch = number
 

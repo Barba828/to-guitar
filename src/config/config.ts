@@ -41,6 +41,8 @@ export const DEGREE_TAG_MAP: Record<IntervalNum, DegreeTag> = {
 	7: 'Ⅶ',
 }
 
+export const DEGREE_TAG_LIST: DegreeTag[] = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ']
+
 // export const SEMITONES_LENGTH = NOTE_LIST.length
 
 /**

@@ -1,7 +1,7 @@
 import { DEFAULT_LEVEL, DEFAULT_TUNE, FINGER_GRADE_NUMS, GRADE_NUMS, NOTE_LIST, degreeMap } from '../config'
 import type { Tone, Point, GuitarBoard, GuitarString, ModeType, Pitch } from '../interface'
 import { transChordType } from './trans'
-import { transTone, transNote } from './trans-tone'
+import { transTone, transNote, transToneNum } from './trans-tone'
 
 /**
  * 便于计算，默认调音一线零品为低音，即
@@ -175,7 +175,7 @@ const transChordTaps = (tones: Tone[], board: GuitarBoard = transBoard(), finger
 }
 
 /**
- * 获取调式音阶基础指法
+ * 获取调式音阶基础指法(上行 & 下行)
  * @param root 根音
  * @param board 指板
  * @param mode 调式
@@ -211,6 +211,32 @@ const getModeFregTaps = (root: Point, board: GuitarBoard = transBoard(), mode: M
 }
 
 /**
+ * 获取指板某范围内某调式音阶
+ * @param root
+ * @param board 
+ * @param mode 
+ * @param range 
+ * @returns 
+ */
+const getModeRangeTaps = (
+	root: Point | Tone,
+	board: GuitarBoard = transBoard(),
+	mode: ModeType = 'minor-pentatonic',
+	range: [number, number] = [0, 5]
+) => {
+	const intervals = degreeMap.get(mode)?.map((item) => item.interval)
+	if (!intervals) {
+		return []
+	}
+	// 获取有效相对音高，在range范围内的所有相对音高符合即可
+	const rootTone = isPoint(root) ? root.tone : transToneNum(root)
+	// 音阶相对音高
+	const toneList = intervals.map((interval) => (interval + rootTone) % 12)
+
+	return getTapsFromBoard(toneList, board, range)
+}
+
+/**
  * 通过相对音高获取指板范围内所有符合音高的指位
  * @param tones 相对音高
  * @param board 吉他指板
@@ -232,8 +258,13 @@ const getTapsFromBoard = (tones: Pitch[], board: GuitarBoard = transBoard(), ran
 	return points
 }
 
+const isPoint = (x: any): x is Point => {
+	return 'tone' in x && 'pitch' in x
+}
+
 export {
 	transBoard, // 二维指板数组
 	transChordTaps, // 和弦指板位置
-	getModeFregTaps, // 获取调式音阶基础指法
+	getModeFregTaps, // 获取调式音阶基础指法(上行 & 下行)
+	getModeRangeTaps, // 获取指板某范围内某调式音阶
 }

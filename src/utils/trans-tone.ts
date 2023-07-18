@@ -74,7 +74,7 @@ const isInterval = (x: any): x is Interval => {
 	return INTERVAL_LIST.includes(x)
 }
 const isIntervalNum = (x: any): x is number => {
-	return typeof x === 'number'
+	return typeof x === 'number' && x < 12
 }
 const isIntervalFalling = (x: any): x is IntervalFalling => {
 	return INTERVAL_FALLING_LIST.includes(x)
