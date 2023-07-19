@@ -46,9 +46,9 @@ export const DEGREE_TAG_LIST: DegreeTag[] = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 
 // export const SEMITONES_LENGTH = NOTE_LIST.length
 
 /**
- * 品柱数量
+ * 品柱数量，即从 0 ～ 16品
  */
-export const GRADE_NUMS = 16
+export const GRADE_NUMS = 17
 /**
  * 弦数量
  */

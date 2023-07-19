@@ -213,10 +213,10 @@ const getModeFregTaps = (root: Point, board: GuitarBoard = transBoard(), mode: M
 /**
  * 获取指板某范围内某调式音阶
  * @param root
- * @param board 
- * @param mode 
- * @param range 
- * @returns 
+ * @param board
+ * @param mode
+ * @param range
+ * @returns
  */
 const getModeRangeTaps = (
 	root: Point | Tone,
@@ -259,6 +259,9 @@ const getTapsFromBoard = (tones: Pitch[], board: GuitarBoard = transBoard(), ran
 }
 
 const isPoint = (x: any): x is Point => {
+	if (typeof x !== 'object') {
+		return false
+	}
 	return 'tone' in x && 'pitch' in x
 }
 
