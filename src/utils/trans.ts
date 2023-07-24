@@ -44,11 +44,15 @@ const getChordType = (chords: Note[]): ChordType[] => {
  * @returns
  */
 const getDegreeTag = (degree: string | number) => {
-	const num = degree.toString().match(/[1-7]/g)?.[0]
-	if (!num) {
+	const numStr = degree.toString().match(/\d+/g)?.[0]
+	if (!numStr) {
 		return ''
 	}
-	return DEGREE_TAG_MAP[Number(num) as IntervalNum]
+	let num = Number(numStr) as IntervalNum
+	if (num > 7) {
+		num = (num % 7) as IntervalNum
+	}
+	return DEGREE_TAG_MAP[num]
 }
 
 /**
